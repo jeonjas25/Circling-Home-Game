@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6720097944080602899}
   - component: {fileID: -8602966911466571252}
   - component: {fileID: 6525365563998032820}
+  - component: {fileID: -3537743605619906941}
   m_Layer: 0
   m_Name: Electron
   m_TagString: Untagged
@@ -286,3 +287,25 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 3.7, y: 3.06}
   m_Direction: 0
+--- !u!95 &-3537743605619906941
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9019585867726838584}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 064e96f2c4822544aa7ecb060529346f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
