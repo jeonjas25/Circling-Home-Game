@@ -4,6 +4,28 @@ public class PlayerController : MonoBehaviour
 {
     Vector2 moveInput;
     public float walkSpeed;
+    public float jumpImpulse;
+    public float airWalkSpeed;
+    public float CurrentMoveSpeed {
+        get
+        {
+            if (IsMoving && !touchingDirections.IsOnWall)
+                {
+                    if (touchingDirections.IsGrounded)
+                    {
+                        return walkSpeed;
+                    }
+                    else 
+                    {
+                        return airWalkSpeed;
+                    }
+                }
+            else 
+            {
+                return 0;
+            }
+        }
+    }
     public bool IsMoving { 
         get 
         {
@@ -42,11 +64,13 @@ public class PlayerController : MonoBehaviour
     private bool isMovingRight = false;
     private Rigidbody2D rb;
     Animator animator;
+    TouchingDirections touchingDirections;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        touchingDirections = GetComponent<TouchingDirections>();
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -63,7 +87,7 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        rb.linearVelocity = new Vector2(moveInput.x * walkSpeed, rb.linearVelocity.y);
+        rb.linearVelocity = new Vector2(moveInput.x * CurrentMoveSpeed, rb.linearVelocity.y);
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -81,6 +105,15 @@ public class PlayerController : MonoBehaviour
         {
             IsMovingLeft = false;
             IsMovingRight = false;
+        }
+    }
+
+    public void OnJump(InputAction.CallbackContext context)
+    {
+        // todo check if alive
+        if (context.started && touchingDirections.IsGrounded)
+        {
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpImpulse);
         }
     }
 }
