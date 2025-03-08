@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: f1ebac7f0b5e6a249a124dfa1c024827
+guid: c31d556109d2c0f4b9d65e3fb805c57e
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8781356774621492246
-    second: IMG_0745_0
+      213: 6876907225321543860
+    second: iiooi_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: IMG_0745_0
+      name: iiooi_0
       rect:
         serializedVersion: 2
-        x: 47
-        y: 127
-        width: 370
-        height: 306
+        x: 95
+        y: 111
+        width: 338
+        height: 338
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: aeb47b20a8a522680800000000000000
-      internalID: -8781356774621492246
+      spriteID: 4b89b9e9faeaf6f50800000000000000
+      internalID: 6876907225321543860
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      IMG_0745_0: -8781356774621492246
+      iiooi_0: 6876907225321543860
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
