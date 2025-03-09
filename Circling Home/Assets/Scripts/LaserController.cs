@@ -25,6 +25,13 @@ public class LaserController : MonoBehaviour
     // fire variables
     public float fireCooldown = 2f;
     private float currentFireCooldown = 0f;
+    public Transform firePoint1;
+    public Transform firePoint2;
+    public float scrollSpeed = 5f;
+    public Material laserMaterial;
+    public SpriteRenderer laserSprite1;
+    public SpriteRenderer laserSprite2;
+    public LayerMask damageLayer;
 
     // other variables
     private Rigidbody2D rb;
@@ -102,7 +109,53 @@ public class LaserController : MonoBehaviour
 
     void Fire()
     {
+        currentFireCooldown += Time.deltaTime;
+        if (currentFireCooldown >= fireCooldown)
+        {
+            currentState = LaserState.Patrolling;
+            laserSprite1.gameObject.SetActive(false);
+            laserSprite2.gameObject.SetActive(false);
+            currentFireCooldown = 0;
+        }
 
+        if (currentFireCooldown < 0.1f)
+        {
+            FireLaser();
+        }
+    }
+
+    void FireLaser()
+    {
+        // First Eye
+        Vector2 fireDirection1 = transform.localScale.x > 0 ? firePoint1.right : -firePoint1.right;
+        RaycastHit2D hit1 = Physics2D.Raycast(firePoint1.position, fireDirection1, Mathf.Infinity, damageLayer);
+        Debug.DrawRay(firePoint1.position, fireDirection1 * 10, Color.yellow, 0.2f); 
+
+        if (hit1.collider != null)
+        {
+            laserSprite1.transform.localScale = new Vector3(hit1.distance, laserSprite1.transform.localScale.y, laserSprite1.transform.localScale.z);
+            laserMaterial.mainTextureOffset += new Vector2(scrollSpeed * Time.deltaTime, 0);
+            laserSprite1.gameObject.SetActive(true);
+        }
+        else
+        {
+            laserSprite1.transform.localScale = new Vector3(0, laserSprite1.transform.localScale.y, laserSprite1.transform.localScale.z);
+        }
+
+        // Second Eye
+        Vector2 fireDirection2 = transform.localScale.x > 0 ? firePoint2.right : -firePoint2.right;
+        RaycastHit2D hit2 = Physics2D.Raycast(firePoint2.position, fireDirection2, Mathf.Infinity, damageLayer);
+        Debug.DrawRay(firePoint2.position, fireDirection2 * 10, Color.yellow, 0.2f);
+        if (hit2.collider != null)
+        {
+            laserSprite2.transform.localScale = new Vector3(hit2.distance, laserSprite2.transform.localScale.y, laserSprite2.transform.localScale.z);
+            laserMaterial.mainTextureOffset += new Vector2(scrollSpeed * Time.deltaTime, 0);
+            laserSprite2.gameObject.SetActive(true);
+        }
+        else
+        {
+            laserSprite2.transform.localScale = new Vector3(0, laserSprite2.transform.localScale.y, laserSprite2.transform.localScale.z);
+        }
     }
 
     void OnDrawGizmosSelected()
