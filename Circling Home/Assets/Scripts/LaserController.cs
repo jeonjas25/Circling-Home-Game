@@ -33,6 +33,8 @@ public class LaserController : MonoBehaviour
     public float scrollSpeed = 5f;
     public LayerMask damageLayer;
     public GameObject bulletPrefab;
+    public GameObject homingBulletPrefab;
+    private int bulletCount = 0;
 
     // other variables
     private Rigidbody2D rb;
