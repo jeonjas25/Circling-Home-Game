@@ -32,6 +32,7 @@ public class LaserController : MonoBehaviour
     public SpriteRenderer laserSprite1;
     public SpriteRenderer laserSprite2;
     public LayerMask damageLayer;
+    public GameObject bulletPrefab;
 
     // other variables
     private Rigidbody2D rb;
@@ -126,7 +127,8 @@ public class LaserController : MonoBehaviour
 
     void FireLaser()
     {
-        // First Eye
+        Instantiate(bulletPrefab, firePoint1.position, firePoint1.rotation);
+        /*
         Vector2 fireDirection1 = transform.right * patrolDirection;
         RaycastHit2D hit1 = Physics2D.Raycast(firePoint1.position, fireDirection1, 10, damageLayer);
         Debug.DrawRay(firePoint1.position, fireDirection1 * 10, Color.yellow, 0.2f); 
@@ -158,6 +160,8 @@ public class LaserController : MonoBehaviour
             laserSprite2.transform.position = firePoint2.position;
             laserSprite2.transform.localScale = new Vector2(10f, 1f);
         }
+        */
+
     }
 
     void OnDrawGizmosSelected()
