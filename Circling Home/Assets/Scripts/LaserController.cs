@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class LaserController : MonoBehaviour
 {
@@ -28,17 +29,17 @@ public class LaserController : MonoBehaviour
     public Transform firePoint1;
     public Transform firePoint2;
     public float scrollSpeed = 5f;
-    public Material laserMaterial;
-    public SpriteRenderer laserSprite1;
-    public SpriteRenderer laserSprite2;
     public LayerMask damageLayer;
     public GameObject bulletPrefab;
 
     // other variables
     private Rigidbody2D rb;
+    private RigidbodyType2D initialBodyType;
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        initialBodyType = rb.bodyType;
+
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -79,6 +80,16 @@ public class LaserController : MonoBehaviour
 
     void PatrolDetection()
     {
+        // changing sprite direction based on patrol direction
+        if (patrolDirection > 0)
+        {
+            transform.localScale = new Vector3(1, transform.localScale.y, transform.localScale.z); // Face right
+        }
+        else
+        {
+            transform.localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z); // Face left
+        }
+
         // detecting edge of platform
         Vector2 raycastPosition = (Vector2) transform.position + new Vector2(raycastOffset.x * patrolDirection, raycastOffset.y);
         RaycastHit2D hit = Physics2D.Raycast(raycastPosition, Vector2.down, raycastDistance, platformLayer);
@@ -100,6 +111,7 @@ public class LaserController : MonoBehaviour
 
     void Charge()
     {
+        rb.bodyType = RigidbodyType2D.Static;
         currentChargeTime += Time.deltaTime;
         if (currentChargeTime >= chargeTime)
         {
@@ -110,12 +122,12 @@ public class LaserController : MonoBehaviour
 
     void Fire()
     {
+        rb.bodyType = RigidbodyType2D.Static;
         currentFireCooldown += Time.deltaTime;
         if (currentFireCooldown >= fireCooldown)
         {
             currentState = LaserState.Patrolling;
-            laserSprite1.gameObject.SetActive(false);
-            laserSprite2.gameObject.SetActive(false);
+            rb.bodyType = initialBodyType;
             currentFireCooldown = 0;
         }
 
@@ -127,41 +139,45 @@ public class LaserController : MonoBehaviour
 
     void FireLaser()
     {
-        Instantiate(bulletPrefab, firePoint1.position, firePoint1.rotation);
-        /*
-        Vector2 fireDirection1 = transform.right * patrolDirection;
-        RaycastHit2D hit1 = Physics2D.Raycast(firePoint1.position, fireDirection1, 10, damageLayer);
-        Debug.DrawRay(firePoint1.position, fireDirection1 * 10, Color.yellow, 0.2f); 
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        Vector2 playerPosition = player.transform.position;
+        float horizontalOffset = playerPosition.x - transform.position.x;
+        Vector2 directionToPlayer = new Vector2(horizontalOffset, 0f).normalized;
 
-        if (hit1.collider != null)
+        if (directionToPlayer.x > 0)
         {
-            laserSprite1.transform.localScale = new Vector2(hit1.distance, 1f);
-            laserMaterial.mainTextureOffset += new Vector2(scrollSpeed * Time.deltaTime, 0);
-            laserSprite1.gameObject.SetActive(true);
+            transform.localScale = new Vector3(1, transform.localScale.y, transform.localScale.z); // Face right
         }
         else
         {
-            laserSprite1.transform.position = firePoint1.position;
-            laserSprite1.transform.localScale = new Vector2(10f, 1f);
+            transform.localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z); // Face left
         }
 
-        // Second Eye
-        Vector2 fireDirection2 = transform.right * patrolDirection;
-        RaycastHit2D hit2 = Physics2D.Raycast(firePoint2.position, fireDirection2, 10, damageLayer);
-        Debug.DrawRay(firePoint2.position, fireDirection2 * 10, Color.yellow, 0.2f);
-        if (hit2.collider != null)
-        {
-            laserSprite2.transform.localScale = new Vector2(hit2.distance, 1f);
-            laserMaterial.mainTextureOffset += new Vector2(scrollSpeed * Time.deltaTime, 0);
-            laserSprite2.gameObject.SetActive(true);
-        }
-        else
-        {
-            laserSprite2.transform.position = firePoint2.position;
-            laserSprite2.transform.localScale = new Vector2(10f, 1f);
-        }
-        */
+        GameObject laserBullet = Instantiate(bulletPrefab, firePoint1.position, Quaternion.identity);
 
+        LaserBulletController bulletController = laserBullet.GetComponent<LaserBulletController>();
+
+        if (bulletController != null)
+        {
+            bulletController.direction = directionToPlayer;
+        }
+
+
+        Collider2D enemyCollider = GetComponent<Collider2D>();
+        Collider2D laserCollider = laserBullet.GetComponent<Collider2D>();
+
+        Physics2D.IgnoreCollision(enemyCollider, laserCollider, true); // Ignore collision
+
+        StartCoroutine(EnableCollision(enemyCollider, laserCollider));
+    }
+
+    IEnumerator EnableCollision(Collider2D enemyCollider, Collider2D laserCollider)
+    {
+        yield return new WaitForSeconds(0.2f); // Adjust the delay as needed
+        if (laserCollider != null)
+        {
+            Physics2D.IgnoreCollision(enemyCollider, laserCollider, false); // Re-enable collision
+        }
     }
 
     void OnDrawGizmosSelected()
