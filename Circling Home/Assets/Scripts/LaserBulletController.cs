@@ -5,22 +5,37 @@ public class LaserBulletController : MonoBehaviour
     public float speed = 20f;
     public Rigidbody2D rb;
     public Vector2 direction;
-    
+    private SpriteRenderer spriteRenderer;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rb.linearVelocity = direction * speed;
+        spriteRenderer = GetComponent<SpriteRenderer>(); // Get SpriteRenderer component
+        if (spriteRenderer != null)
+        {
+            if (direction.x > 0)
+            {
+                spriteRenderer.flipX = true; 
+            }
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if ((rb.transform.position.x < -50) || (rb.transform.position.x > 3000))
+        {
+            Destroy(gameObject);
+        }
     }
 
     void OnTriggerEnter2D(Collider2D hitInfo)
     {
-        Debug.Log(hitInfo.name);
-        Destroy(gameObject);
+        if (hitInfo.gameObject.CompareTag("Player"))
+        {
+            Debug.Log(hitInfo.name);
+            Destroy(gameObject);
+        }
     }
 }

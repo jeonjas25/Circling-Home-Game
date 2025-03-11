@@ -242,6 +242,7 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 256
+  fireRate: 0.8
   fireCooldown: 2
   firePoint1: {fileID: 2276525311107922149}
   firePoint2: {fileID: 195264695893310374}

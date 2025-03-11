@@ -24,6 +24,8 @@ public class LaserController : MonoBehaviour
     public LayerMask playerLayer;
 
     // fire variables
+    public float fireRate = 0.5f;
+    private float lastFireTime = 0f;
     public float fireCooldown = 2f;
     private float currentFireCooldown = 0f;
     public Transform firePoint1;
@@ -130,45 +132,46 @@ public class LaserController : MonoBehaviour
             rb.bodyType = initialBodyType;
             currentFireCooldown = 0;
         }
-
-        if (currentFireCooldown < 0.1f)
-        {
             FireLaser();
-        }
     }
 
     void FireLaser()
     {
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        Vector2 playerPosition = player.transform.position;
-        float horizontalOffset = playerPosition.x - transform.position.x;
-        Vector2 directionToPlayer = new Vector2(horizontalOffset, 0f).normalized;
+        if (Time.time - lastFireTime >= fireRate)
+            {
+                GameObject player = GameObject.FindGameObjectWithTag("Player");
+                Vector2 playerPosition = player.transform.position;
+                float horizontalOffset = playerPosition.x - transform.position.x;
+                Vector2 directionToPlayer = new Vector2(horizontalOffset, 0f).normalized;
 
-        if (directionToPlayer.x > 0)
-        {
-            transform.localScale = new Vector3(1, transform.localScale.y, transform.localScale.z); // Face right
-        }
-        else
-        {
-            transform.localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z); // Face left
-        }
+                if (directionToPlayer.x > 0)
+                {
+                    transform.localScale = new Vector3(1, transform.localScale.y, transform.localScale.z);
+                }
+                else
+                {
+                    transform.localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z);
+                }
 
-        GameObject laserBullet = Instantiate(bulletPrefab, firePoint1.position, Quaternion.identity);
+                GameObject laserBullet = Instantiate(bulletPrefab, firePoint1.position, Quaternion.identity);
 
-        LaserBulletController bulletController = laserBullet.GetComponent<LaserBulletController>();
+                LaserBulletController bulletController = laserBullet.GetComponent<LaserBulletController>();
 
-        if (bulletController != null)
-        {
-            bulletController.direction = directionToPlayer;
-        }
+                if (bulletController != null)
+                {
+                    bulletController.direction = directionToPlayer;
+                }
 
+                Collider2D enemyCollider = GetComponent<Collider2D>();
+                Collider2D laserCollider = laserBullet.GetComponent<Collider2D>();
 
-        Collider2D enemyCollider = GetComponent<Collider2D>();
-        Collider2D laserCollider = laserBullet.GetComponent<Collider2D>();
+                Physics2D.IgnoreCollision(enemyCollider, laserCollider, true);
 
-        Physics2D.IgnoreCollision(enemyCollider, laserCollider, true); // Ignore collision
+                StartCoroutine(EnableCollision(enemyCollider, laserCollider));
 
-        StartCoroutine(EnableCollision(enemyCollider, laserCollider));
+                lastFireTime = Time.time; // Reset the timer
+            }
+
     }
 
     IEnumerator EnableCollision(Collider2D enemyCollider, Collider2D laserCollider)
