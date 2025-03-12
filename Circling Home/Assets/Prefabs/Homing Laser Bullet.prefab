@@ -177,4 +177,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   homingSpeed: 5
   rotationSpeed: 200
+  initialSpeed: 20
+  homingDuration: 5
+  lifeTime: 7
+  explosionPrefab: {fileID: 8875587462104967249, guid: 9b3d2fd75c6f56040adae3fc1f856e4d, type: 3}
   rb: {fileID: 7039540197331672332}
+  direction: {x: 0, y: 0}

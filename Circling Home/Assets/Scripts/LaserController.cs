@@ -155,23 +155,47 @@ public class LaserController : MonoBehaviour
                     transform.localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z);
                 }
 
-                GameObject laserBullet = Instantiate(bulletPrefab, firePoint1.position, Quaternion.identity);
-
-                LaserBulletController bulletController = laserBullet.GetComponent<LaserBulletController>();
-
-                if (bulletController != null)
+                if ((bulletCount % 3 == 0) && (bulletCount != 0))
                 {
-                    bulletController.direction = directionToPlayer;
+
+                    GameObject homingLaserBullet = Instantiate(homingBulletPrefab, firePoint1.position, Quaternion.identity);
+
+                    HomingLaserBulletController homingBulletController = homingLaserBullet.GetComponent<HomingLaserBulletController>();
+
+                    if (homingBulletController != null)
+                    {
+                        homingBulletController.direction = directionToPlayer;
+                    }
+
+                    Collider2D enemyCollider = GetComponent<Collider2D>();
+                    Collider2D homingLaserCollider = homingLaserBullet.GetComponent<Collider2D>();
+
+                    Physics2D.IgnoreCollision(enemyCollider, homingLaserCollider, true);
+
+                    StartCoroutine(EnableCollision(enemyCollider, homingLaserCollider));
+                }
+                else 
+                {
+                    GameObject laserBullet = Instantiate(bulletPrefab, firePoint1.position, Quaternion.identity);
+
+                    LaserBulletController bulletController = laserBullet.GetComponent<LaserBulletController>();
+
+                    if (bulletController != null)
+                    {
+                        bulletController.direction = directionToPlayer;
+                    }
+
+                    Collider2D enemyCollider = GetComponent<Collider2D>();
+                    Collider2D laserCollider = laserBullet.GetComponent<Collider2D>();
+
+                    Physics2D.IgnoreCollision(enemyCollider, laserCollider, true);
+
+                    StartCoroutine(EnableCollision(enemyCollider, laserCollider));
+                    
                 }
 
-                Collider2D enemyCollider = GetComponent<Collider2D>();
-                Collider2D laserCollider = laserBullet.GetComponent<Collider2D>();
-
-                Physics2D.IgnoreCollision(enemyCollider, laserCollider, true);
-
-                StartCoroutine(EnableCollision(enemyCollider, laserCollider));
-
                 lastFireTime = Time.time; // Reset the timer
+                bulletCount++;
             }
 
     }
