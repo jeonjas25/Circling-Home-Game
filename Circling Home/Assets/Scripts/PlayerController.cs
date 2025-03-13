@@ -6,6 +6,8 @@ public class PlayerController : MonoBehaviour
     public float walkSpeed;
     public float jumpImpulse;
     public float airWalkSpeed;
+    public float maxHealth = 100f;
+    public float currentHealth;
     public float CurrentMoveSpeed {
         get
         {
