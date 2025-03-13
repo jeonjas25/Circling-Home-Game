@@ -12,16 +12,16 @@ public class PlayerController : MonoBehaviour
         get
         {
             if (IsMoving && !touchingDirections.IsOnWall)
+            {
+                if (touchingDirections.IsGrounded)
                 {
-                    if (touchingDirections.IsGrounded)
-                    {
-                        return walkSpeed;
-                    }
-                    else 
-                    {
-                        return airWalkSpeed;
-                    }
+                    return walkSpeed;
                 }
+                else 
+                {
+                    return airWalkSpeed;
+                }
+            }
             else 
             {
                 return 0;
@@ -78,7 +78,7 @@ public class PlayerController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        currentHealth = maxHealth;
     }
 
     // Update is called once per frame
@@ -116,6 +116,26 @@ public class PlayerController : MonoBehaviour
         if (context.started && touchingDirections.IsGrounded)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpImpulse);
+        }
+    }
+
+    public void TakeDamage(float damage)
+    {
+        currentHealth -= damage;
+        currentHealth = Mathf.Clamp(currentHealth, 0f, maxHealth);
+    }
+
+    public void HealDamage(float healAmount)
+    {
+        currentHealth += healAmount;
+        currentHealth = Mathf.Clamp(currentHealth, 0f, maxHealth);
+    }
+
+    public void Die()
+    {
+        if (currentHealth <= 0f)
+        {
+            Debug.Log("Player Died!");
         }
     }
 }

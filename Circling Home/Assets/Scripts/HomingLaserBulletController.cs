@@ -14,6 +14,7 @@ public class HomingLaserBulletController : MonoBehaviour
     private float lifeTimer = 0f;
     private bool isHoming = true;
     public Vector2 direction;
+    public float damage = 10f;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -75,7 +76,9 @@ public class HomingLaserBulletController : MonoBehaviour
     {
         if (hitInfo.gameObject.CompareTag("Player"))
         {
+            PlayerController playerController = hitInfo.gameObject.GetComponent<PlayerController>();
             Debug.Log(hitInfo.name);
+            playerController.TakeDamage(damage);
             Destroy(gameObject);
         }
     }

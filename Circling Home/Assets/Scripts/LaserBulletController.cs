@@ -6,6 +6,7 @@ public class LaserBulletController : MonoBehaviour
     public Rigidbody2D rb;
     public Vector2 direction;
     private SpriteRenderer spriteRenderer;
+    public float damage = 10f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -34,7 +35,9 @@ public class LaserBulletController : MonoBehaviour
     {
         if (hitInfo.gameObject.CompareTag("Player"))
         {
+            PlayerController playerController = hitInfo.gameObject.GetComponent<PlayerController>();
             Debug.Log(hitInfo.name);
+            playerController.TakeDamage(damage);
             Destroy(gameObject);
         }
     }
