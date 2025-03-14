@@ -13,6 +13,7 @@ public class HomingLaserBulletController : MonoBehaviour
     private float homingTimer = 0f;
     private float lifeTimer = 0f;
     private bool isHoming = true;
+    private bool hasCollided = false;
     public Vector2 direction;
     public float damage = 10f;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -74,11 +75,14 @@ public class HomingLaserBulletController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D hitInfo)
     {
+        if (hasCollided) return;
+
         if (hitInfo.gameObject.CompareTag("Player"))
         {
             PlayerController playerController = hitInfo.gameObject.GetComponent<PlayerController>();
             Debug.Log(hitInfo.name);
             playerController.TakeDamage(damage);
+            hasCollided = true;
             Destroy(gameObject);
         }
     }

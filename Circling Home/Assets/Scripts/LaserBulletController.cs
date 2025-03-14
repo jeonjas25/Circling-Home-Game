@@ -7,6 +7,7 @@ public class LaserBulletController : MonoBehaviour
     public Vector2 direction;
     private SpriteRenderer spriteRenderer;
     public float damage = 10f;
+    private bool hasCollided = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -33,11 +34,14 @@ public class LaserBulletController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D hitInfo)
     {
+        if (hasCollided) return;
+
         if (hitInfo.gameObject.CompareTag("Player"))
         {
             PlayerController playerController = hitInfo.gameObject.GetComponent<PlayerController>();
             Debug.Log(hitInfo.name);
             playerController.TakeDamage(damage);
+            hasCollided = true;
             Destroy(gameObject);
         }
     }

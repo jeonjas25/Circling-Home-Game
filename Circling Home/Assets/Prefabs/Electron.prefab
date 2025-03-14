@@ -17,9 +17,9 @@ GameObject:
   - component: {fileID: -3537743605619906941}
   - component: {fileID: -6188018592111962195}
   - component: {fileID: 62652156699140836}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Electron
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -82,16 +82,16 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 4
-  m_Sprite: {fileID: -8781356774621492246, guid: f1ebac7f0b5e6a249a124dfa1c024827, type: 3}
+  m_SortingOrder: 5
+  m_Sprite: {fileID: 6876907225321543860, guid: c31d556109d2c0f4b9d65e3fb805c57e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 3.7, y: 3.06}
+  m_Size: {x: 3.38, y: 3.38}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!114 &5415792670287630269
@@ -108,7 +108,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkSpeed: 10
   jumpImpulse: 10
-  airWalkSpeed: 3
+  airWalkSpeed: 8
+  maxHealth: 100
+  currentHealth: 0
 --- !u!114 &6720097944080602899
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -265,7 +267,7 @@ Rigidbody2D:
   m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!70 &6525365563998032820
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -300,8 +302,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 3.7, y: 3.06}
+  m_Offset: {x: 0, y: 0.1435062}
+  m_Size: {x: 3.7, y: 3.7}
   m_Direction: 0
 --- !u!95 &-3537743605619906941
 Animator:
@@ -391,6 +393,6 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 3.7, y: 3.06}
+  m_Offset: {x: 0, y: 0.14350617}
+  m_Size: {x: 3.7, y: 3.7}
   m_Direction: 0

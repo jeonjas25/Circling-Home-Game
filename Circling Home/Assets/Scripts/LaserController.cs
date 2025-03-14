@@ -34,7 +34,7 @@ public class LaserController : MonoBehaviour
     public LayerMask damageLayer;
     public GameObject bulletPrefab;
     public GameObject homingBulletPrefab;
-    private int bulletCount = 0;
+    private int bulletCount = 1;
 
     // other variables
     private Rigidbody2D rb;
@@ -158,7 +158,7 @@ public class LaserController : MonoBehaviour
                 if ((bulletCount % 3 == 0) && (bulletCount != 0))
                 {
 
-                    GameObject homingLaserBullet = Instantiate(homingBulletPrefab, firePoint1.position, Quaternion.identity);
+                    GameObject homingLaserBullet = Instantiate(homingBulletPrefab, firePoint2.position, Quaternion.identity);
 
                     HomingLaserBulletController homingBulletController = homingLaserBullet.GetComponent<HomingLaserBulletController>();
 
@@ -168,7 +168,8 @@ public class LaserController : MonoBehaviour
                     }
 
                     Collider2D enemyCollider = GetComponent<Collider2D>();
-                    Collider2D homingLaserCollider = homingLaserBullet.GetComponent<Collider2D>();
+                    Transform homingLaserChildTransform = homingLaserBullet.transform.Find("Collider");
+                    Collider2D homingLaserCollider = homingLaserChildTransform.GetComponent<Collider2D>();
 
                     Physics2D.IgnoreCollision(enemyCollider, homingLaserCollider, true);
 

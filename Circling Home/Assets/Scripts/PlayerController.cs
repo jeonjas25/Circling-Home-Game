@@ -90,6 +90,7 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         rb.linearVelocity = new Vector2(moveInput.x * CurrentMoveSpeed, rb.linearVelocity.y);
+        Debug.Log(currentHealth);
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -123,6 +124,11 @@ public class PlayerController : MonoBehaviour
     {
         currentHealth -= damage;
         currentHealth = Mathf.Clamp(currentHealth, 0f, maxHealth);
+
+        if (currentHealth <= 0f)
+        {
+            Die();
+        }
     }
 
     public void HealDamage(float healAmount)
