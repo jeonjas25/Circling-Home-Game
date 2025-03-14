@@ -90,7 +90,7 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         rb.linearVelocity = new Vector2(moveInput.x * CurrentMoveSpeed, rb.linearVelocity.y);
-        Debug.Log(currentHealth);
+        //Debug.Log(currentHealth);
     }
 
     public void OnMove(InputAction.CallbackContext context)
