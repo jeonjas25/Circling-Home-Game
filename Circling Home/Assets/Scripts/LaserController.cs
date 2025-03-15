@@ -39,17 +39,22 @@ public class LaserController : MonoBehaviour
     // other variables
     private Rigidbody2D rb;
     private RigidbodyType2D initialBodyType;
+    public float maxHealth = 30f;
+    public float currentHealth;
+    public EnemyHealthBar healthBar;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         initialBodyType = rb.bodyType;
+        healthBar.SetMaxHealth(maxHealth);
 
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        currentHealth = maxHealth;
     }
 
     // Update is called once per frame
@@ -214,5 +219,20 @@ public class LaserController : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, detectionRange);
+    }
+
+    public void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+        healthBar.SetHealth(currentHealth);
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    void Die()
+    {
+        Destroy(gameObject);
     }
 }
