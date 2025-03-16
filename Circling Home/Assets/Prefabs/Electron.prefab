@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: -3537743605619906941}
   - component: {fileID: -6188018592111962195}
   - component: {fileID: 62652156699140836}
+  - component: {fileID: 3403756593114620687}
   m_Layer: 8
   m_Name: Electron
   m_TagString: Player
@@ -396,3 +397,21 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0.14350617}
   m_Size: {x: 3.7, y: 3.7}
   m_Direction: 0
+--- !u!114 &3403756593114620687
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9019585867726838584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70eca4cac6b288f4d96f20adb5af7d5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isMeleeMode: 1
+  attackPoint: {fileID: 0}
+  attackRange: 0.5
+  enemyLayers:
+    serializedVersion: 2
+    m_Bits: 1024
