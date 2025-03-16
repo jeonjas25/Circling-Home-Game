@@ -61,9 +61,9 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("isMovingRight", value);
         }
     }
-    private bool isMoving = false;
-    private bool isMovingLeft = false;
-    private bool isMovingRight = false;
+    public bool isMoving = false;
+    public bool isMovingLeft = false;
+    public bool isMovingRight = false;
     private Rigidbody2D rb;
     Animator animator;
     TouchingDirections touchingDirections;

@@ -1,26 +1,32 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections;
 
 public class PlayerCombat : MonoBehaviour
 {
     public bool isMeleeMode = true;
-    // public Transform attackPoint;
+    public Transform RangedAttackPoint;
     public float attackRange = 0.5f;
+    public float fireRate = 0.5f;
+    public float nextFireTime = 0f;
     public LayerMask enemyLayers;
+    public GameObject bulletPrefab;
+    public Collider2D playerCollider;
 
     private PlayerController playerController;
-    private Animator animator;
+    //private Animator animator;
 
     void Awake()
     {
         playerController = GetComponent<PlayerController>();
-        animator = GetComponent<Animator>();
+        //animator = GetComponent<Animator>();
     }
 
     public void OnAttack(InputAction.CallbackContext context)
     {
         if (context.started)
         {
+            Debug.Log("attacked");
             if (isMeleeMode)
             {
                 MeleeAttack();
@@ -49,7 +55,40 @@ public class PlayerCombat : MonoBehaviour
 
     void RangedAttack()
     {
+        if (Time.time >= nextFireTime)
+        {
+            GameObject bullet = Instantiate(bulletPrefab, RangedAttackPoint.position, Quaternion.identity);
+            LaserBulletController laserBulletController = bullet.GetComponent<LaserBulletController>();
 
+            if (playerController.isMovingRight) // or however you are tracking player direction.
+            {
+                laserBulletController.direction = Vector2.right; // Fire right
+            }
+            else if (playerController.isMovingLeft)
+            {
+                laserBulletController.direction = Vector2.left; // Fire left
+            }
+            else
+            {
+                laserBulletController.direction = Vector2.right; // default to right, or whatever default direction you want.
+            }
+
+            Collider2D bulletCollider = bullet.GetComponent<Collider2D>();
+            Physics2D.IgnoreCollision(playerCollider, bulletCollider, true);
+            StartCoroutine(EnableCollision(playerCollider, bulletCollider));
+
+            // animator.SetTrigger("Ranged Attack");
+            nextFireTime = Time.time + fireRate;
+        }
+    }
+
+    IEnumerator EnableCollision(Collider2D playerCollider, Collider2D bulletCollider)
+    {
+        yield return new WaitForSeconds(0.4f); // Adjust the delay as needed
+        if (playerCollider != null && bulletCollider != null);
+        {
+            Physics2D.IgnoreCollision(playerCollider, bulletCollider, false); // Re-enable collision
+        }
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created

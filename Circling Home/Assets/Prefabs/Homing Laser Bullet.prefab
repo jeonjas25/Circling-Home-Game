@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3174700581958713453}
   - component: {fileID: 7039540197331672332}
   - component: {fileID: -9169682743489214375}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Homing Laser Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}

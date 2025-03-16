@@ -13,6 +13,7 @@ public class LaserBulletController : MonoBehaviour
     void Start()
     {
         rb.linearVelocity = direction * speed;
+        Debug.Log("direction: " + direction);
         spriteRenderer = GetComponent<SpriteRenderer>(); // Get SpriteRenderer component
         if (spriteRenderer != null)
         {
@@ -41,6 +42,14 @@ public class LaserBulletController : MonoBehaviour
             PlayerController playerController = hitInfo.gameObject.GetComponent<PlayerController>();
             Debug.Log(hitInfo.name);
             playerController.TakeDamage(damage);
+            hasCollided = true;
+            Destroy(gameObject);
+        }
+        else if (hitInfo.gameObject.CompareTag("Laser"))
+        {
+            LaserController laserController = hitInfo.gameObject.GetComponent<LaserController>();
+            Debug.Log(hitInfo.name);
+            laserController.TakeDamage(damage);
             hasCollided = true;
             Destroy(gameObject);
         }
