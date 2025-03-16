@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -854086992612872182}
   m_Layer: 11
   m_Name: Electron Bullet
-  m_TagString: Untagged
+  m_TagString: Electron Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -106,6 +106,7 @@ MonoBehaviour:
   rb: {fileID: 1937884088439875709}
   direction: {x: 0, y: 0}
   damage: 10
+  maxXPos: 20
 --- !u!50 &1937884088439875709
 Rigidbody2D:
   serializedVersion: 5

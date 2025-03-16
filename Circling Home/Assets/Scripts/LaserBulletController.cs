@@ -9,6 +9,9 @@ public class LaserBulletController : MonoBehaviour
     public float damage = 10f;
     private bool hasCollided = false;
 
+    public float maxXPos = 10f;
+    private float playerInitialX;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -21,11 +24,24 @@ public class LaserBulletController : MonoBehaviour
                 spriteRenderer.flipX = true; 
             }
         }
+
+        if (gameObject.CompareTag("Electron Bullet"))
+        {
+            playerInitialX = transform.position.x;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (gameObject.CompareTag("Electron Bullet"))
+        {
+            float distance = Mathf.Abs(transform.position.x - playerInitialX);
+            if (distance > maxXPos)
+            {
+                Destroy(gameObject);
+            }
+        }
         if ((rb.transform.position.x < -50) || (rb.transform.position.x > 3000))
         {
             Destroy(gameObject);
