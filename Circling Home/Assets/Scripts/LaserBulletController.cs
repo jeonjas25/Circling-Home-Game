@@ -13,7 +13,6 @@ public class LaserBulletController : MonoBehaviour
     void Start()
     {
         rb.linearVelocity = direction * speed;
-        Debug.Log("direction: " + direction);
         spriteRenderer = GetComponent<SpriteRenderer>(); // Get SpriteRenderer component
         if (spriteRenderer != null)
         {

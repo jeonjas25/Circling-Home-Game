@@ -39,7 +39,7 @@ public class LaserController : MonoBehaviour
     // other variables
     private Rigidbody2D rb;
     private RigidbodyType2D initialBodyType;
-    public float maxHealth = 30f;
+    public float maxHealth = 50f;
     public float currentHealth;
     public EnemyHealthBar healthBar;
 

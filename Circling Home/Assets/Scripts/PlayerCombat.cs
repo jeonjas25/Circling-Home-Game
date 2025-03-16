@@ -73,21 +73,8 @@ public class PlayerCombat : MonoBehaviour
                 laserBulletController.direction = Vector2.right; // default to right, or whatever default direction you want.
             }
 
-            Collider2D bulletCollider = bullet.GetComponent<Collider2D>();
-            Physics2D.IgnoreCollision(playerCollider, bulletCollider, true);
-            StartCoroutine(EnableCollision(playerCollider, bulletCollider));
-
             // animator.SetTrigger("Ranged Attack");
             nextFireTime = Time.time + fireRate;
-        }
-    }
-
-    IEnumerator EnableCollision(Collider2D playerCollider, Collider2D bulletCollider)
-    {
-        yield return new WaitForSeconds(0.4f); // Adjust the delay as needed
-        if (playerCollider != null && bulletCollider != null);
-        {
-            Physics2D.IgnoreCollision(playerCollider, bulletCollider, false); // Re-enable collision
         }
     }
 

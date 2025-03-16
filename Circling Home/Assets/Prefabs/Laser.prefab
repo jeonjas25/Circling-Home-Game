@@ -608,6 +608,6 @@ MonoBehaviour:
     m_Bits: 256
   bulletPrefab: {fileID: 3886038993378204745, guid: 0595ed8c265d4af4ea6dbdbbfd4c0a4a, type: 3}
   homingBulletPrefab: {fileID: 4344723126639865290, guid: 6f68b43edc05de545a103deb21739e74, type: 3}
-  maxHealth: 30
+  maxHealth: 50
   currentHealth: 0
   healthBar: {fileID: 4377633015703844984}
