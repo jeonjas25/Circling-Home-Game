@@ -14,12 +14,12 @@ public class PlayerCombat : MonoBehaviour
     public Collider2D playerCollider;
 
     private PlayerController playerController;
-    //private Animator animator;
+    private Animator animator;
 
     void Awake()
     {
         playerController = GetComponent<PlayerController>();
-        //animator = GetComponent<Animator>();
+        animator = GetComponent<Animator>();
     }
 
     public void OnAttack(InputAction.CallbackContext context)
@@ -44,13 +44,13 @@ public class PlayerCombat : MonoBehaviour
         {
             isMeleeMode = !isMeleeMode;
             Debug.Log("Mode switched to: " + (isMeleeMode ? "Melee" : "Ranged"));
-            // animator.SetBool("IsMeleeMode", isMeleeMode);
+            animator.SetBool("IsMeleeMode", isMeleeMode);
         }
     }
 
     void MeleeAttack()
     {
-
+        animator.SetTrigger("Slash");
     }
 
     void RangedAttack()

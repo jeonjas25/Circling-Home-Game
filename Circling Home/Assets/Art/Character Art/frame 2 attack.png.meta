@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 4b4bb521ca41b4c4d90848afd2f136ee
+guid: 28a212788647b6948a7f6428125deffe
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -6810017032104273965
-    second: sideways electric (1)_0
+      213: -5215090524464653504
+    second: frame 2 attack_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -75,7 +75,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -113,23 +113,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: sideways electric (1)_0
+      name: frame 2 attack_0
       rect:
         serializedVersion: 2
-        x: 95
-        y: 79
-        width: 417
-        height: 418
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 79
+        y: 191
+        width: 258
+        height: 210
+      alignment: 9
+      pivot: {x: 0.6860465, y: 0.30952382}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 3d7901f1795fd71a0800000000000000
-      internalID: -6810017032104273965
+      spriteID: 04b57c97cc640a7b0800000000000000
+      internalID: -5215090524464653504
       vertices: []
       indices: 
       edges: []
@@ -138,7 +138,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: bdc94e95590557f4384563d51ad39239
     internalID: 0
     vertices: []
     indices: 
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      sideways electric (1)_0: -6810017032104273965
+      frame 2 attack_0: -5215090524464653504
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
