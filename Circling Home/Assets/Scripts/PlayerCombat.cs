@@ -12,6 +12,11 @@ public class PlayerCombat : MonoBehaviour
     public LayerMask enemyLayers;
     public GameObject bulletPrefab;
     public Collider2D playerCollider;
+    public Transform meleeAttackPoint;
+    public float meleeAttackRange = 0.5f;
+    public float meleeAttackDamage = 20f;
+    public float meleeAttackCooldown = 1f;
+    private float nextAttackTime = 0f;
 
     private PlayerController playerController;
     private Animator animator;
@@ -29,7 +34,11 @@ public class PlayerCombat : MonoBehaviour
             Debug.Log("attacked");
             if (isMeleeMode)
             {
-                MeleeAttack();
+                if (Time.time >= nextAttackTime)
+                {
+                    MeleeAttack();
+                    nextAttackTime = Time.time + meleeAttackCooldown;
+                }
             }
             else 
             {
@@ -51,6 +60,23 @@ public class PlayerCombat : MonoBehaviour
     void MeleeAttack()
     {
         animator.SetTrigger("Slash");
+
+         // Detect enemies in range of attack
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(meleeAttackPoint.position, meleeAttackRange, enemyLayers);
+
+        // Damage them
+        foreach (Collider2D enemy in hitEnemies)
+        {
+            Debug.Log("We hit " + enemy.name);
+            if (enemy.CompareTag("Laser"))
+            {
+                LaserController laserController = enemy.GetComponent<LaserController>();
+                if (laserController != null)
+                {
+                    laserController.TakeDamage(meleeAttackDamage);
+                }
+            }
+        }
     }
 
     void RangedAttack()
@@ -88,5 +114,13 @@ public class PlayerCombat : MonoBehaviour
     void Update()
     {
         
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        if (meleeAttackPoint != null)
+        {
+            Gizmos.DrawWireSphere(meleeAttackPoint.position, meleeAttackRange);
+        }
     }
 }
