@@ -42,6 +42,8 @@ public class LaserController : MonoBehaviour
     public float maxHealth = 50f;
     public float currentHealth;
     public EnemyHealthBar healthBar;
+    public GameObject healPotionPrefab;
+    public float potionDropChance = 0.5f;
 
     void Awake()
     {
@@ -234,6 +236,10 @@ public class LaserController : MonoBehaviour
 
     void Die()
     {
+        if (Random.value <= potionDropChance && healPotionPrefab != null)
+        {
+            Instantiate(healPotionPrefab, transform.position, Quaternion.identity);
+        }
         Destroy(gameObject);
     }
 }

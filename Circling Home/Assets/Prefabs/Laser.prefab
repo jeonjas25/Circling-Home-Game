@@ -611,3 +611,5 @@ MonoBehaviour:
   maxHealth: 50
   currentHealth: 0
   healthBar: {fileID: 4377633015703844984}
+  healPotionPrefab: {fileID: 3836426031814753737, guid: 7d4e5bcc9e2ea1d47ab163bc5fee36a8, type: 3}
+  potionDropChance: 1
