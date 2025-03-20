@@ -84,7 +84,10 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (transform.position.y < -8)
+        {
+            Die();
+        }
     }
 
     void FixedUpdate()
@@ -139,9 +142,6 @@ public class PlayerController : MonoBehaviour
 
     public void Die()
     {
-        if (currentHealth <= 0f)
-        {
-            Debug.Log("Player Died!");
-        }
+        Debug.Log("Player Died!");
     }
 }
