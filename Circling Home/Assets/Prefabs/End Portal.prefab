@@ -138,3 +138,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 078649fa3054aca4ca08a529511c736f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  worldMapSceneName: WorldMap
+  nextLevelNodeIndex: 0
