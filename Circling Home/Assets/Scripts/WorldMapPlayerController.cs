@@ -64,4 +64,9 @@ public class WorldMapPlayerController : MonoBehaviour
             currentNode = null;
         }
     }
+
+    public Transform GetPlayerTransform()
+    {
+        return transform;
+    }
 }
