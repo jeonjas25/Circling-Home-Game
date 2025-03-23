@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     public float airWalkSpeed;
     public float maxHealth = 100f;
     public float currentHealth;
+    public Vector2 respawnPosition;
     public float CurrentMoveSpeed {
         get
         {
@@ -79,6 +80,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         currentHealth = maxHealth;
+        respawnPosition = transform.position;
     }
 
     // Update is called once per frame
@@ -143,5 +145,12 @@ public class PlayerController : MonoBehaviour
     public void Die()
     {
         Debug.Log("Player Died!");
+        Respawn();
+    }
+
+    public void Respawn()
+    {
+        transform.position = respawnPosition;
+        transform.rotation = Quaternion.identity;
     }
 }
