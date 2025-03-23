@@ -176,6 +176,8 @@ MonoBehaviour:
   airWalkSpeed: 8
   maxHealth: 100
   currentHealth: 0
+  respawnPosition: {x: 0, y: 0}
+  healthBar: {fileID: 0}
   isMoving: 0
   isMovingLeft: 0
   isMovingRight: 0

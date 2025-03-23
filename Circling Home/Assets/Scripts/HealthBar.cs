@@ -19,4 +19,12 @@ public class HealthBar : MonoBehaviour
             foregroundImage.fillAmount = playerController.currentHealth / playerController.maxHealth;
         }
     }
+
+    public void Reset()
+    {
+        if (foregroundImage != null)
+        {
+            foregroundImage.fillAmount = 1.0f;
+        }
+    }
 }

@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     public float maxHealth = 100f;
     public float currentHealth;
     public Vector2 respawnPosition;
+    public HealthBar healthBar;
     public float CurrentMoveSpeed {
         get
         {
@@ -152,5 +153,7 @@ public class PlayerController : MonoBehaviour
     {
         transform.position = respawnPosition;
         transform.rotation = Quaternion.identity;
+        currentHealth = maxHealth;
+        healthBar.Reset();
     }
 }
