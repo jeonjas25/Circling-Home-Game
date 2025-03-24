@@ -4,27 +4,35 @@ public class PlayerController : MonoBehaviour
 {
     Vector2 moveInput;
     public float walkSpeed;
+    public float dashSpeed = 20f;
+    public float dashDuration = 0.2f;
+    public float doubleTapThreshold = 0.3f;
     public float jumpImpulse;
     public float airWalkSpeed;
     public float maxHealth = 100f;
     public float currentHealth;
     public Vector2 respawnPosition;
     public HealthBar healthBar;
-    public float CurrentMoveSpeed {
+    public float CurrentMoveSpeed
+    {
         get
         {
+            if (isDashing)
+            {
+                return dashSpeed;
+            }
             if (IsMoving && !touchingDirections.IsOnWall)
             {
                 if (touchingDirections.IsGrounded)
                 {
                     return walkSpeed;
                 }
-                else 
+                else
                 {
                     return airWalkSpeed;
                 }
             }
-            else 
+            else
             {
                 return 0;
             }
@@ -69,6 +77,10 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     Animator animator;
     TouchingDirections touchingDirections;
+    private float lastMoveTime;
+    private float lastMoveDirection;
+    private float dashTimer;
+    private bool isDashing;
 
     void Awake()
     {
@@ -91,6 +103,15 @@ public class PlayerController : MonoBehaviour
         {
             Die();
         }
+
+        if (isDashing)
+        {
+            dashTimer += Time.deltaTime;
+            if (dashTimer >= dashDuration)
+            {
+                isDashing = false;
+            }
+        }
     }
 
     void FixedUpdate()
@@ -109,6 +130,11 @@ public class PlayerController : MonoBehaviour
         {
             IsMovingRight = moveInput.x > 0;
             IsMovingLeft = moveInput.x < 0;
+
+            if (context.started)
+            {
+                CheckForDoubleTap(moveInput.x);
+            }
         }
         else
         {
@@ -124,6 +150,26 @@ public class PlayerController : MonoBehaviour
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpImpulse);
         }
+    }
+
+    void CheckForDoubleTap(float moveDirection)
+    {
+        float currentTime = Time.time;
+
+        if (Mathf.Sign(moveDirection) == Mathf.Sign(lastMoveDirection) && currentTime - lastMoveTime < doubleTapThreshold)
+        {
+            Dash(moveDirection);
+        }
+
+        lastMoveTime = currentTime;
+        lastMoveDirection = moveDirection;
+    }
+
+    void Dash(float direction)
+    {
+        isDashing = true;
+        dashTimer = 0f;
+        moveInput.x = direction;
     }
 
     public void TakeDamage(float damage)
