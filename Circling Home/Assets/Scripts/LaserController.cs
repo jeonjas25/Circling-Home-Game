@@ -242,4 +242,12 @@ public class LaserController : MonoBehaviour
         }
         Destroy(gameObject);
     }
+
+    void OnTriggerEnter2D(Collider2D other)
+{
+    if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+    {
+        patrolDirection *= -1;
+    }
+}
 }
