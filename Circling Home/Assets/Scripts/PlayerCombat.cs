@@ -61,6 +61,15 @@ public class PlayerCombat : MonoBehaviour
     {
         animator.SetTrigger("Slash");
 
+        if (playerController.isMovingRight)
+        {
+            meleeAttackPoint.localPosition = new Vector3(Mathf.Abs(meleeAttackPoint.localPosition.x), meleeAttackPoint.localPosition.y, meleeAttackPoint.localPosition.z);
+        }
+        else if (playerController.isMovingLeft)
+        {
+            meleeAttackPoint.localPosition = new Vector3(-Mathf.Abs(meleeAttackPoint.localPosition.x), meleeAttackPoint.localPosition.y, meleeAttackPoint.localPosition.z);
+        }
+
          // Detect enemies in range of attack
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(meleeAttackPoint.position, meleeAttackRange, enemyLayers);
 

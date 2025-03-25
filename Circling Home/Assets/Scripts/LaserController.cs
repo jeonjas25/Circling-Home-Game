@@ -12,7 +12,7 @@ public class LaserController : MonoBehaviour
 
     // patrol variables
     public float patrolSpeed;
-    private int patrolDirection = 1;
+    public int patrolDirection = 1;
     public float raycastDistance = 1.5f;
     public LayerMask platformLayer;
     public Vector2 raycastOffset = new Vector2(0.5f, -1.9f);
@@ -227,6 +227,7 @@ public class LaserController : MonoBehaviour
     {
         currentHealth -= damage;
         healthBar.SetHealth(currentHealth);
+        Debug.Log("Damage: " + damage);
         if (currentHealth <= 0)
         {
             Die();
@@ -243,11 +244,4 @@ public class LaserController : MonoBehaviour
         Destroy(gameObject);
     }
 
-    void OnTriggerEnter2D(Collider2D other)
-{
-    if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
-    {
-        patrolDirection *= -1;
-    }
-}
 }
