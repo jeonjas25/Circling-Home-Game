@@ -17,6 +17,7 @@ public class PlayerCombat : MonoBehaviour
     public float meleeAttackDamage = 20f;
     public float meleeAttackCooldown = 1f;
     private float nextAttackTime = 0f;
+    public ChargeBar chargeBar;
 
     private PlayerController playerController;
     private Animator animator;
@@ -83,6 +84,7 @@ public class PlayerCombat : MonoBehaviour
                 if (laserController != null)
                 {
                     laserController.TakeDamage(meleeAttackDamage);
+                    chargeBar.AddCharge(meleeAttackDamage);
                 }
             }
         }

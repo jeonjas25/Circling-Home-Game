@@ -8,6 +8,7 @@ public class LaserBulletController : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     public float damage = 10f;
     private bool hasCollided = false;
+    private ChargeBar chargeBar;
 
     public float maxXPos = 10f;
     private float playerInitialX;
@@ -29,6 +30,7 @@ public class LaserBulletController : MonoBehaviour
         {
             playerInitialX = transform.position.x;
         }
+        chargeBar = FindObjectOfType<ChargeBar>();
     }
 
     // Update is called once per frame
@@ -65,6 +67,7 @@ public class LaserBulletController : MonoBehaviour
             LaserController laserController = hitInfo.gameObject.GetComponent<LaserController>();
             Debug.Log(hitInfo.name);
             laserController.TakeDamage(damage);
+            chargeBar.AddCharge(damage);
             hasCollided = true;
             Destroy(gameObject);
         }
