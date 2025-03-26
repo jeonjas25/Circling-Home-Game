@@ -18,7 +18,6 @@ public class PlayerCombat : MonoBehaviour
     public float meleeAttackCooldown = 1f;
     private float nextAttackTime = 0f;
     public ChargeBar chargeBar;
-
     private PlayerController playerController;
     private Animator animator;
 
@@ -58,6 +57,26 @@ public class PlayerCombat : MonoBehaviour
         }
     }
 
+    public void OnSuper(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            if (chargeBar.IsChargeFull())
+            {
+                Debug.Log("Charge Attack");
+                if (isMeleeMode)
+                {
+                    MeleeSuperAttack();
+                    chargeBar.ResetCharge();
+                }
+                else 
+                {
+                    RangedSuperAttack();
+                    chargeBar.ResetCharge();
+                }
+            }
+        }
+    }
     void MeleeAttack()
     {
         animator.SetTrigger("Slash");
@@ -113,6 +132,16 @@ public class PlayerCombat : MonoBehaviour
             // animator.SetTrigger("Ranged Attack");
             nextFireTime = Time.time + fireRate;
         }
+    }
+
+    void MeleeSuperAttack()
+    {
+
+    }
+
+    void RangedSuperAttack()
+    {
+
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
