@@ -172,15 +172,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkSpeed: 10
+  dashSpeed: 20
+  dashDuration: 0.2
+  doubleTapThreshold: 0.3
   jumpImpulse: 10
   airWalkSpeed: 8
   maxHealth: 100
   currentHealth: 0
   respawnPosition: {x: 0, y: 0}
   healthBar: {fileID: 0}
+  chargeBar: {fileID: 0}
   isMoving: 0
   isMovingLeft: 0
   isMovingRight: 0
+  xLimitLeft: -16
 --- !u!114 &6720097944080602899
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -334,6 +339,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 5a0a1ae0-0b19-4743-a51c-bdb8f49bb122
     m_ActionName: 'Player/Switch[/Keyboard/q]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3403756593114620687}
+        m_TargetAssemblyTypeName: PlayerCombat, Assembly-CSharp
+        m_MethodName: OnSuper
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: ed74f3c2-b8b1-48fb-90d0-1f0129719a2f
+    m_ActionName: Player/New action
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -520,3 +541,4 @@ MonoBehaviour:
   meleeAttackRange: 1.99
   meleeAttackDamage: 20
   meleeAttackCooldown: 1
+  chargeBar: {fileID: 0}
