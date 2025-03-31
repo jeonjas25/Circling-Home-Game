@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Laser
   - Electron Bullet
+  - Ground
   layers:
   - Default
   - TransparentFX

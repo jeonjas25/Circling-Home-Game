@@ -1884,46 +1884,6 @@ PrefabInstance:
       propertyPath: healthBar
       value: 
       objectReference: {fileID: 192492280}
-    - target: {fileID: 6720097944080602899, guid: a8632cf7a82201a4d8a02a70c98e938c, type: 3}
-      propertyPath: m_ActionEvents.Array.size
-      value: 21
-      objectReference: {fileID: 0}
-    - target: {fileID: 6720097944080602899, guid: a8632cf7a82201a4d8a02a70c98e938c, type: 3}
-      propertyPath: m_ActionEvents.Array.data[20].m_ActionId
-      value: ed74f3c2-b8b1-48fb-90d0-1f0129719a2f
-      objectReference: {fileID: 0}
-    - target: {fileID: 6720097944080602899, guid: a8632cf7a82201a4d8a02a70c98e938c, type: 3}
-      propertyPath: m_ActionEvents.Array.data[20].m_ActionName
-      value: Player/New action
-      objectReference: {fileID: 0}
-    - target: {fileID: 6720097944080602899, guid: a8632cf7a82201a4d8a02a70c98e938c, type: 3}
-      propertyPath: m_ActionEvents.Array.data[20].m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6720097944080602899, guid: a8632cf7a82201a4d8a02a70c98e938c, type: 3}
-      propertyPath: m_ActionEvents.Array.data[20].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6720097944080602899, guid: a8632cf7a82201a4d8a02a70c98e938c, type: 3}
-      propertyPath: m_ActionEvents.Array.data[20].m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1351449079}
-    - target: {fileID: 6720097944080602899, guid: a8632cf7a82201a4d8a02a70c98e938c, type: 3}
-      propertyPath: m_ActionEvents.Array.data[20].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6720097944080602899, guid: a8632cf7a82201a4d8a02a70c98e938c, type: 3}
-      propertyPath: m_ActionEvents.Array.data[20].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnSuper
-      objectReference: {fileID: 0}
-    - target: {fileID: 6720097944080602899, guid: a8632cf7a82201a4d8a02a70c98e938c, type: 3}
-      propertyPath: m_ActionEvents.Array.data[20].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: PlayerCombat, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 6720097944080602899, guid: a8632cf7a82201a4d8a02a70c98e938c, type: 3}
-      propertyPath: m_ActionEvents.Array.data[20].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
     - target: {fileID: 8418225745551889963, guid: a8632cf7a82201a4d8a02a70c98e938c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2038,7 +1998,7 @@ GameObject:
   - component: {fileID: 1746457925}
   m_Layer: 9
   m_Name: Tilemap
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
