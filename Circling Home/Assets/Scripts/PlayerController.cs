@@ -82,6 +82,7 @@ public class PlayerController : MonoBehaviour
     private float lastMoveDirection;
     private float dashTimer;
     private bool isDashing;
+    public float xLimitLeft = -16f;
 
     void Awake()
     {
@@ -112,6 +113,11 @@ public class PlayerController : MonoBehaviour
             {
                 isDashing = false;
             }
+        }
+
+        if (transform.position.x < xLimitLeft)
+        {
+            transform.position = new Vector3(xLimitLeft, transform.position.y, transform.position.z);
         }
     }
 
