@@ -169,7 +169,16 @@ public class PlayerCombat : MonoBehaviour
 
         //animator.SetTrigger("Rush");
 
-        float rushDirection = playerController.isMovingRight ? 1f : -1f;
+        float rushDirection = 1f; // Default to right
+
+        if (playerController.isMovingRight)
+        {
+            rushDirection = 1f; // Right
+        }
+        else if (playerController.isMovingLeft)
+        {
+            rushDirection = -1f; // Left
+        }
 
         float startTime = Time.time;
 
