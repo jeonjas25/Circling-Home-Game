@@ -542,3 +542,14 @@ MonoBehaviour:
   meleeAttackDamage: 20
   meleeAttackCooldown: 1
   chargeBar: {fileID: 0}
+  rushDistance: 10
+  rushSpeed: 20
+  rushDuration: 2
+  rushDamage: 50
+  rushCooldown: 2
+  rushingLayer:
+    serializedVersion: 2
+    m_Bits: 131072
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 512

@@ -20,6 +20,18 @@ public class PlayerCombat : MonoBehaviour
     public ChargeBar chargeBar;
     private PlayerController playerController;
     private Animator animator;
+    public float rushDistance = 10f;
+    public float rushSpeed = 20f;
+    public float rushDuration = 2f;
+    public float rushDamage = 40f;
+    public float rushCooldown = 2f;
+    public LayerMask rushingLayer;
+    public LayerMask groundLayer;
+    private int originalLayer;
+    private bool isRushing = false;
+    private float nextRushTime = 0f;
+    public Vector2 raycastOffset = new Vector2(0.24f, -0.75f);
+    public float raycastDistance = 1.5f;
 
     void Awake()
     {
@@ -67,7 +79,6 @@ public class PlayerCombat : MonoBehaviour
                 if (isMeleeMode)
                 {
                     MeleeSuperAttack();
-                    chargeBar.ResetCharge();
                 }
                 else 
                 {
@@ -136,12 +147,51 @@ public class PlayerCombat : MonoBehaviour
 
     void MeleeSuperAttack()
     {
-
+        if (Time.time >= nextRushTime && !isRushing) // Check cooldown and not dashing
+        {
+            StartCoroutine(SwordRush());
+            chargeBar.ResetCharge();
+            nextRushTime = Time.time + rushCooldown;
+        }
     }
 
     void RangedSuperAttack()
     {
 
+    }
+
+    IEnumerator SwordRush()
+    {
+        Debug.Log("Sword Rush Triggered");
+        isRushing = true;
+        originalLayer = gameObject.layer;
+        gameObject.layer = Mathf.RoundToInt(Mathf.Log(rushingLayer.value, 2));
+
+        //animator.SetTrigger("Rush");
+
+        float rushDirection = playerController.isMovingRight ? 1f : -1f;
+
+        float startTime = Time.time;
+
+        while (Time.time < startTime + rushDuration)
+        {
+            Vector2 raycastPosition = (Vector2) transform.position + new Vector2(raycastOffset.x * rushDirection, raycastOffset.y);
+            RaycastHit2D hit = Physics2D.Raycast(raycastPosition, Vector2.down, raycastDistance, groundLayer);
+            Debug.DrawRay(raycastPosition, Vector2.down * raycastDistance, Color.red);
+
+            if (hit.collider == null) 
+            {
+                break;
+            }
+
+            Vector2 rushEndPosition = (Vector2)transform.position + Vector2.right * rushDirection * rushDistance;
+            transform.position = Vector2.MoveTowards(transform.position, rushEndPosition, rushSpeed * Time.deltaTime);
+
+            yield return null;
+        }
+
+        gameObject.layer = originalLayer; // Restore original layer
+        isRushing = false;
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
