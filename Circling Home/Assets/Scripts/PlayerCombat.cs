@@ -12,8 +12,6 @@ public class PlayerCombat : MonoBehaviour
     public float nextFireTime = 0f;
     public LayerMask enemyLayers;
     public GameObject bulletPrefab;
-    public Collider2D playerCollider;
-    public Collider2D playerCollider2;
     public Transform meleeAttackPoint;
     public float meleeAttackRange = 0.5f;
     public float meleeAttackDamage = 20f;
@@ -34,11 +32,13 @@ public class PlayerCombat : MonoBehaviour
     private float nextRushTime = 0f;
     public Vector2 raycastOffset = new Vector2(0.24f, -0.75f);
     public float raycastDistance = 1.5f;
+    public TouchingDirections touchingDirections;
 
     void Awake()
     {
         playerController = GetComponent<PlayerController>();
         animator = GetComponent<Animator>();
+        touchingDirections = GetComponent<TouchingDirections>();
     }
 
     public void OnAttack(InputAction.CallbackContext context)
@@ -168,8 +168,15 @@ public class PlayerCombat : MonoBehaviour
         isRushing = true;
         originalLayer = gameObject.layer;
         gameObject.layer = Mathf.RoundToInt(Mathf.Log(rushingLayer.value, 2));
-        playerCollider.enabled = false;
-        playerCollider2.enabled = false;
+
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Laser"); // Find all enemies with the "Laser" tag
+        Collider2D playerCollider = GetComponent<Collider2D>(); // Get the player's main collider
+
+        foreach (GameObject enemy in enemies)
+        {
+            Collider2D enemyCollider = enemy.GetComponent<Collider2D>(); // Get the enemy's collider
+            Physics2D.IgnoreCollision(playerCollider, enemyCollider, true); // Ignore collisions
+        }
 
         //animator.SetTrigger("Rush");
 
@@ -189,13 +196,16 @@ public class PlayerCombat : MonoBehaviour
 
         while (Time.time < startTime + rushDuration)
         {
-            Vector2 raycastPosition = (Vector2) transform.position + new Vector2(raycastOffset.x * rushDirection, raycastOffset.y);
-            RaycastHit2D hit = Physics2D.Raycast(raycastPosition, Vector2.down, raycastDistance, groundLayer);
-            Debug.DrawRay(raycastPosition, Vector2.down * raycastDistance, Color.red);
-
-            if (hit.collider == null) 
+            if (touchingDirections.IsGrounded)
             {
-                break;
+                Vector2 raycastPosition = (Vector2) transform.position + new Vector2(raycastOffset.x * rushDirection, raycastOffset.y);
+                RaycastHit2D hit = Physics2D.Raycast(raycastPosition, Vector2.down, raycastDistance, groundLayer);
+                Debug.DrawRay(raycastPosition, Vector2.down * raycastDistance, Color.red);
+
+                if (hit.collider == null) 
+                {
+                    break;
+                }
             }
 
             Vector2 rushEndPosition = (Vector2)transform.position + Vector2.right * rushDirection * rushDistance;
@@ -228,8 +238,12 @@ public class PlayerCombat : MonoBehaviour
 
         gameObject.layer = originalLayer; // Restore original layer
         isRushing = false;
-        playerCollider.enabled = true;
-        playerCollider2.enabled = true;
+
+        foreach (GameObject enemy in enemies)
+        {
+            Collider2D enemyCollider = enemy.GetComponent<Collider2D>();
+            Physics2D.IgnoreCollision(playerCollider, enemyCollider, false); // Re-enable collisions
+        }
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
