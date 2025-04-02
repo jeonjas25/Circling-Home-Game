@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
+using System.Collections.Generic;
 
 public class PlayerCombat : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class PlayerCombat : MonoBehaviour
     public LayerMask enemyLayers;
     public GameObject bulletPrefab;
     public Collider2D playerCollider;
+    public Collider2D playerCollider2;
     public Transform meleeAttackPoint;
     public float meleeAttackRange = 0.5f;
     public float meleeAttackDamage = 20f;
@@ -166,6 +168,8 @@ public class PlayerCombat : MonoBehaviour
         isRushing = true;
         originalLayer = gameObject.layer;
         gameObject.layer = Mathf.RoundToInt(Mathf.Log(rushingLayer.value, 2));
+        playerCollider.enabled = false;
+        playerCollider2.enabled = false;
 
         //animator.SetTrigger("Rush");
 
@@ -181,6 +185,7 @@ public class PlayerCombat : MonoBehaviour
         }
 
         float startTime = Time.time;
+        List<Collider2D> damagedEnemies = new List<Collider2D>();
 
         while (Time.time < startTime + rushDuration)
         {
@@ -194,6 +199,28 @@ public class PlayerCombat : MonoBehaviour
             }
 
             Vector2 rushEndPosition = (Vector2)transform.position + Vector2.right * rushDirection * rushDistance;
+
+            Collider2D[] hitEnemies = Physics2D.OverlapAreaAll(
+                new Vector2(Mathf.Min(transform.position.x, rushEndPosition.x), Mathf.Min(transform.position.y, rushEndPosition.y)),
+                new Vector2(Mathf.Max(transform.position.x, rushEndPosition.x), Mathf.Max(transform.position.y, rushEndPosition.y)),
+                enemyLayers);
+
+            foreach (Collider2D enemy in hitEnemies)
+            {
+                if (enemy.CompareTag("Laser"))
+                {
+                    if (!damagedEnemies.Contains(enemy)) // Check if already damaged
+                    {
+                        LaserController laserController = enemy.GetComponent<LaserController>();
+                        if (laserController != null)
+                        {
+                            laserController.TakeDamage(rushDamage);
+                            damagedEnemies.Add(enemy); // Add to the list
+                        }
+                    }
+                }
+            }
+
             transform.position = Vector2.MoveTowards(transform.position, rushEndPosition, rushSpeed * Time.deltaTime);
 
             yield return null;
@@ -201,6 +228,8 @@ public class PlayerCombat : MonoBehaviour
 
         gameObject.layer = originalLayer; // Restore original layer
         isRushing = false;
+        playerCollider.enabled = true;
+        playerCollider2.enabled = true;
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created

@@ -536,7 +536,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   bulletPrefab: {fileID: 8520618938512440214, guid: c3c7d6d4403b87f4b979aeb38955a70d, type: 3}
-  playerCollider: {fileID: 62652156699140836}
+  playerCollider: {fileID: 6525365563998032820}
+  playerCollider2: {fileID: 62652156699140836}
   meleeAttackPoint: {fileID: 8873960324569481695}
   meleeAttackRange: 1.99
   meleeAttackDamage: 20
@@ -545,7 +546,7 @@ MonoBehaviour:
   rushDistance: 10
   rushSpeed: 20
   rushDuration: 2
-  rushDamage: 50
+  rushDamage: 40
   rushCooldown: 2
   rushingLayer:
     serializedVersion: 2
@@ -553,3 +554,5 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 512
+  raycastOffset: {x: 0.24, y: -0.75}
+  raycastDistance: 1.5
