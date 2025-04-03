@@ -208,7 +208,11 @@ public class PlayerCombat : MonoBehaviour
                 }
             }
 
-            Vector2 rushEndPosition = (Vector2)transform.position + Vector2.right * rushDirection * rushDistance;
+            float airRushSpeed = rushSpeed / 2; // Half the speed in the air
+            float airRushDistance = rushDistance / 2; // Half the distance in the air
+            float downwardForce = 5f; // Add a downward force
+
+            Vector2 rushEndPosition = (Vector2)transform.position + Vector2.right * rushDirection * (touchingDirections.IsGrounded ? rushDistance : airRushDistance);
 
             Collider2D[] hitEnemies = Physics2D.OverlapAreaAll(
                 new Vector2(Mathf.Min(transform.position.x, rushEndPosition.x), Mathf.Min(transform.position.y, rushEndPosition.y)),
@@ -231,7 +235,13 @@ public class PlayerCombat : MonoBehaviour
                 }
             }
 
-            transform.position = Vector2.MoveTowards(transform.position, rushEndPosition, rushSpeed * Time.deltaTime);
+            Vector2 movement = Vector2.MoveTowards(transform.position, rushEndPosition, (touchingDirections.IsGrounded ? rushSpeed : airRushSpeed) * Time.deltaTime);
+
+            if (!touchingDirections.IsGrounded){
+                movement += Vector2.down * downwardForce * Time.deltaTime;
+            }
+
+            transform.position = movement;
 
             yield return null;
         }
