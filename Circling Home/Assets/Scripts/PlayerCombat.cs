@@ -178,7 +178,7 @@ public class PlayerCombat : MonoBehaviour
             Physics2D.IgnoreCollision(playerCollider, enemyCollider, true); // Ignore collisions
         }
 
-        //animator.SetTrigger("Rush");
+        animator.SetBool("isRushing", true);
 
         float rushDirection = 1f; // Default to right
 
@@ -246,6 +246,7 @@ public class PlayerCombat : MonoBehaviour
             yield return null;
         }
 
+        animator.SetBool("isRushing", false);
         gameObject.layer = originalLayer; // Restore original layer
         isRushing = false;
 
