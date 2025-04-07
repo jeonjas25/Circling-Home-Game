@@ -12,6 +12,7 @@ public class PlayerCombat : MonoBehaviour
     public float nextFireTime = 0f;
     public LayerMask enemyLayers;
     public GameObject bulletPrefab;
+    public GameObject lightningPrefab;
     public Transform meleeAttackPoint;
     public float meleeAttackRange = 0.5f;
     public float meleeAttackDamage = 20f;
@@ -158,6 +159,28 @@ public class PlayerCombat : MonoBehaviour
 
     void RangedSuperAttack()
     {
+        Debug.Log("Ranged Super Attack");
+        if (Time.time >= nextFireTime)
+        {
+            GameObject lightningBolt = Instantiate(lightningPrefab, RangedAttackPoint.position, Quaternion.identity);
+            Debug.Log("Lightning bolt instantiated");
+            ChainLightningBoltController chainLightningBoltController = lightningBolt.GetComponent<ChainLightningBoltController>();
+
+            if (playerController.isMovingRight) // or however you are tracking player direction.
+            {
+                chainLightningBoltController.direction = Vector2.right; // Fire right
+            }
+            else if (playerController.isMovingLeft)
+            {
+                chainLightningBoltController.direction = Vector2.left; // Fire left
+            }
+            else
+            {
+                chainLightningBoltController.direction = Vector2.right; // default to right, or whatever default direction you want.
+            }
+
+            nextFireTime = Time.time + fireRate;
+        }
         chargeBar.ResetCharge();
     }
 
