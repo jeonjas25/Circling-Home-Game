@@ -85,7 +85,6 @@ public class PlayerCombat : MonoBehaviour
                 else 
                 {
                     RangedSuperAttack();
-                    chargeBar.ResetCharge();
                 }
             }
         }
@@ -149,7 +148,7 @@ public class PlayerCombat : MonoBehaviour
 
     void MeleeSuperAttack()
     {
-        if (Time.time >= nextRushTime && !isRushing) // Check cooldown and not dashing
+        if (Time.time >= nextRushTime && !isRushing)
         {
             StartCoroutine(SwordRush());
             chargeBar.ResetCharge();
@@ -159,7 +158,7 @@ public class PlayerCombat : MonoBehaviour
 
     void RangedSuperAttack()
     {
-
+        chargeBar.ResetCharge();
     }
 
     IEnumerator SwordRush()
