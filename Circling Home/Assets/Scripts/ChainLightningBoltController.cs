@@ -5,7 +5,7 @@ public class ChainLightningBoltController : MonoBehaviour
 {
     public float speed = 20f;
     public int maxChains = 3;
-    public float chainRange = 5f; 
+    public float chainRange = 10f; 
     public float damageAmount = 10f;
     public float slowAmount = 0.5f; // Percentage to slow down (e.g., 0.5 means 50% speed)
     public float slowDuration = 2f; // How long the slow lasts
@@ -18,6 +18,7 @@ public class ChainLightningBoltController : MonoBehaviour
     private int currentChains = 0;
     private List<GameObject> hitEnemies; // To prevent hitting the same enemy multiple times
     private SpriteRenderer spriteRenderer;
+    private GameObject firstEnemyHit;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -33,14 +34,7 @@ public class ChainLightningBoltController : MonoBehaviour
             }
         }
 
-        if (targetEnemy != null)
-        {
-
-        }
-        else 
-        {
-            rb.linearVelocity = direction * speed;
-        }
+        rb.linearVelocity = direction * speed;
     }
 
     // Update is called once per frame
@@ -52,7 +46,7 @@ public class ChainLightningBoltController : MonoBehaviour
             Destroy(gameObject);
         }
 
-        /*if (targetEnemy != null)
+        if (targetEnemy != null)
         {
             // Move towards the current target enemy
             transform.position = Vector2.MoveTowards(transform.position, targetEnemy.position, speed * Time.deltaTime);
@@ -63,26 +57,26 @@ public class ChainLightningBoltController : MonoBehaviour
                 HitEnemy(targetEnemy.gameObject);
             }
         }
-        else if (currentChains < maxChains)
+
+        else if (currentChains < maxChains && hitEnemies.Count > 0)
         {
-            // If we lost the target (maybe it died?), try to find a new one nearby
             FindNewTarget();
         }
-        else
+
+        else if (currentChains >= maxChains)
         {
-            // If we've chained enough times, destroy the projectile
-            Destroy(gameObject);
-        }*/
+            Destroy(gameObject); // Destroy after max chains
+        }
+
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Laser") && !hitEnemies.Contains(other.gameObject))
         {
-            if (targetEnemy == null)
-            {
-                targetEnemy = other.transform;
-            }
+            Debug.Log("Lightning Hit first Laser");
+            firstEnemyHit = other.gameObject;
+            HitEnemy(firstEnemyHit);
         }
     }
 
@@ -94,6 +88,7 @@ public class ChainLightningBoltController : MonoBehaviour
             if (laserController != null)
             {
                 laserController.TakeDamage(damageAmount);
+                Debug.Log("Dealt " + damageAmount + " damage to " + enemyObject.name);
             }
 
             // add slow effect and slow projectile stuff here
@@ -135,11 +130,12 @@ public class ChainLightningBoltController : MonoBehaviour
         if (closestEnemy != null)
         {
             targetEnemy = closestEnemy.transform;
+            Debug.Log("Targeting new enemy: " + closestEnemy.name);
         }
         else
         {
-            // No new targets found, maybe just keep moving forward or destroy
-            Destroy(gameObject);
+            Debug.Log("No new targets found.");
+            Destroy(gameObject, 1f); // Destroy if no new targets after a short delay
         }
     }
 }
