@@ -7,11 +7,11 @@ public class ChainLightningBoltController : MonoBehaviour
     public int maxChains = 3;
     public float chainRange = 10f; 
     public float damageAmount = 10f;
-    public float slowAmount = 0.5f; // Percentage to slow down (e.g., 0.5 means 50% speed)
-    public float slowDuration = 2f; // How long the slow lasts
+    public float slowAmount = 0.3f; // Percentage to slow down (e.g., 0.5 means 50% speed)
+    public float slowDuration = 5f; // How long the slow lasts
     public Rigidbody2D rb;
     public Vector2 direction;
-    public float maxXPos = 10f;
+    public float maxXPos = 30f;
     private float playerInitialX;
 
     private Transform targetEnemy; // The first enemy we're aiming at
@@ -89,6 +89,7 @@ public class ChainLightningBoltController : MonoBehaviour
             {
                 laserController.TakeDamage(damageAmount);
                 Debug.Log("Dealt " + damageAmount + " damage to " + enemyObject.name);
+                laserController.SlowDown(slowAmount, slowDuration);
             }
 
             // add slow effect and slow projectile stuff here

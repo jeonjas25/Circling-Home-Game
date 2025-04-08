@@ -44,12 +44,17 @@ public class LaserController : MonoBehaviour
     public EnemyHealthBar healthBar;
     public GameObject healPotionPrefab;
     public float potionDropChance = 0.5f;
+    public float slowPercentage = 0f;
+    public float slowTimer = 0f;
+    public bool isSlowed = false;
+    public float originalSpeed;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         initialBodyType = rb.bodyType;
         healthBar.SetMaxHealth(maxHealth);
+        originalSpeed = patrolSpeed;
 
     }
 
@@ -86,6 +91,22 @@ public class LaserController : MonoBehaviour
 
     void PatrolMovement()
     {
+        if (isSlowed)
+        {
+            patrolSpeed = originalSpeed * (1f - slowPercentage);
+            slowTimer -= Time.deltaTime;
+            if (slowTimer <= 0)
+            {
+                isSlowed = false;
+                slowPercentage = 0f;
+                patrolSpeed = originalSpeed;
+                Debug.Log("Slow Stopped");
+            }
+        }
+        else 
+        {
+            patrolSpeed = originalSpeed;
+        }
         rb.linearVelocity = new Vector2(patrolSpeed * patrolDirection, rb.linearVelocity.y);
     }
 
@@ -234,6 +255,14 @@ public class LaserController : MonoBehaviour
             Debug.Log("Laser died!");
         }
     }
+
+    public void SlowDown(float percentage, float duration)
+    {
+        Debug.Log("Slowed");
+        slowPercentage = percentage;
+        slowTimer = duration;
+        isSlowed = true;
+    }   
 
     void Die()
     {
