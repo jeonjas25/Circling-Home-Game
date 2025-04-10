@@ -16,9 +16,15 @@ public class HomingLaserBulletController : MonoBehaviour
     private bool hasCollided = false;
     public Vector2 direction;
     public float damage = 10f;
+
+    public float slowPercentage = 0f;
+    public float slowTimer = 0f;
+    public bool isSlowed = false;
+    public float originalSpeed;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        originalSpeed = homingSpeed;
         FindPlayer();
         rb.linearVelocity = direction * initialSpeed;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
@@ -30,6 +36,22 @@ public class HomingLaserBulletController : MonoBehaviour
     {
         lifeTimer += Time.fixedDeltaTime;
 
+        if (isSlowed)
+        {
+            homingSpeed = originalSpeed * (1f - slowPercentage);
+            slowTimer -= Time.deltaTime;
+            if (slowTimer <= 0)
+            {
+                isSlowed = false;
+                slowPercentage = 0f;
+                homingSpeed = originalSpeed;
+            }
+        }
+        else 
+        {
+            homingSpeed = originalSpeed;
+        }
+        
         if (isHoming && target != null)
         {
             homingTimer += Time.fixedDeltaTime;
@@ -85,5 +107,13 @@ public class HomingLaserBulletController : MonoBehaviour
             hasCollided = true;
             Destroy(gameObject);
         }
+    }
+
+    public void SlowDown(float percentage, float duration)
+    {
+        Debug.Log("Homing Bullet Slowed");
+        slowPercentage = percentage;
+        slowTimer = duration;
+        isSlowed = true;
     }
 }

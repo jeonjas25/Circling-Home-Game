@@ -193,6 +193,10 @@ public class LaserController : MonoBehaviour
                     if (homingBulletController != null)
                     {
                         homingBulletController.direction = directionToPlayer;
+                        if (isSlowed)
+                        {
+                            homingBulletController.SlowDown(0.5f, 4f);
+                        }
                     }
 
                     Collider2D enemyCollider = GetComponent<Collider2D>();
@@ -212,6 +216,10 @@ public class LaserController : MonoBehaviour
                     if (bulletController != null)
                     {
                         bulletController.direction = directionToPlayer;
+                        if (isSlowed)
+                        {
+                            bulletController.SlowDown(0.5f, 4f);
+                        }
                     }
 
                     Collider2D enemyCollider = GetComponent<Collider2D>();
