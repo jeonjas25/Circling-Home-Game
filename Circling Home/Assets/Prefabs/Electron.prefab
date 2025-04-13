@@ -175,7 +175,7 @@ MonoBehaviour:
   dashSpeed: 20
   dashDuration: 0.2
   doubleTapThreshold: 0.3
-  jumpImpulse: 10
+  jumpImpulse: 14
   airWalkSpeed: 8
   maxHealth: 100
   currentHealth: 0
@@ -375,7 +375,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 2
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
