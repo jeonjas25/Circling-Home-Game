@@ -25,6 +25,7 @@ public class LaserController : MonoBehaviour
 
     // fire variables
     public float fireRate = 0.5f;
+    public float originalFireRate;
     private float lastFireTime = 0f;
     public float fireCooldown = 2f;
     private float currentFireCooldown = 0f;
@@ -55,6 +56,7 @@ public class LaserController : MonoBehaviour
         initialBodyType = rb.bodyType;
         healthBar.SetMaxHealth(maxHealth);
         originalSpeed = patrolSpeed;
+        originalFireRate = fireRate;
 
     }
 
@@ -154,6 +156,24 @@ public class LaserController : MonoBehaviour
 
     void Fire()
     {
+        if (isSlowed)
+        {
+            fireRate = originalFireRate * 2;
+            slowTimer -= Time.deltaTime;
+            Debug.Log("New Fire Rate: " + fireRate);
+            if (slowTimer <= 0)
+            {
+                isSlowed = false;
+                slowPercentage = 0f;
+                fireRate = originalFireRate;
+                Debug.Log("Fire Rate Slow Stopped");
+            }
+        }
+        else 
+        {
+            fireRate = originalFireRate;
+        }
+
         rb.bodyType = RigidbodyType2D.Static;
         currentFireCooldown += Time.deltaTime;
         if (currentFireCooldown >= fireCooldown)

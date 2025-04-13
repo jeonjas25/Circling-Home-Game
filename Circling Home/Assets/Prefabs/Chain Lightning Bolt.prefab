@@ -181,7 +181,7 @@ MonoBehaviour:
   chainRange: 5
   damageAmount: 10
   slowAmount: 0.5
-  slowDuration: 4
+  slowDuration: 6
   rb: {fileID: 2494032538458433091}
   direction: {x: 0, y: 0}
   maxXPos: 30
