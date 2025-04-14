@@ -84,6 +84,20 @@ public class PlayerController : MonoBehaviour
     private bool isDashing;
     public float xLimitLeft = -16f;
 
+    private bool isJumping = false;
+    private float verticalVelocity = 0f;
+    public float initialJumpForce = 10f;
+    public float gravityStrength = 20f;
+    public float fallGravityMultiplier = 2.5f;
+    private bool isJumpButtonHeld = false;
+    public float jumpCutOffMultiplier = 0.5f;
+    public float maxJumpVelocity = 30f;
+
+    private bool canUseCoyote = false;
+    private float lastTimeGrounded;
+    public float coyoteTimeDuration = 0.15f;
+    private bool wasGroundedLastFrame = false;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -119,12 +133,57 @@ public class PlayerController : MonoBehaviour
         {
             transform.position = new Vector3(xLimitLeft, transform.position.y, transform.position.z);
         }
+
+        if (touchingDirections.IsGrounded)
+        {
+            lastTimeGrounded = Time.time;
+            canUseCoyote = true;
+        }
+
+        wasGroundedLastFrame = touchingDirections.IsGrounded;
     }
 
     void FixedUpdate()
     {
         rb.linearVelocity = new Vector2(moveInput.x * CurrentMoveSpeed, rb.linearVelocity.y);
-        //Debug.Log(currentHealth);
+        
+        if (isJumping)
+        {
+            if (verticalVelocity > 0 && isJumpButtonHeld)
+            {
+                // While holding and going up, reduce gravity's effect
+                verticalVelocity -= (gravityStrength * (1f - jumpCutOffMultiplier)) * Time.fixedDeltaTime;
+                verticalVelocity = Mathf.Min(verticalVelocity, maxJumpVelocity);
+            }
+            else if (verticalVelocity > 0 && !isJumpButtonHeld)
+            {
+                // If button released while going up, start falling sooner
+                verticalVelocity -= gravityStrength * fallGravityMultiplier * Time.fixedDeltaTime;
+            }
+            else
+            {
+                // Falling
+                verticalVelocity -= gravityStrength * fallGravityMultiplier * Time.fixedDeltaTime;
+            }
+
+            transform.Translate(Vector3.up * verticalVelocity * Time.fixedDeltaTime);
+
+            // Check if grounded
+            if (touchingDirections.IsGrounded && verticalVelocity <= 0)
+            {
+                isJumping = false;
+                verticalVelocity = 0f;
+            }
+        }
+        else if (touchingDirections.IsGrounded)
+        {
+            verticalVelocity = Mathf.Min(0f, verticalVelocity);
+        }
+        else
+        {
+            verticalVelocity -= gravityStrength * fallGravityMultiplier * Time.fixedDeltaTime;
+            transform.Translate(Vector3.up * verticalVelocity * Time.fixedDeltaTime);
+        }
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -153,10 +212,28 @@ public class PlayerController : MonoBehaviour
     public void OnJump(InputAction.CallbackContext context)
     {
         // todo check if alive
-        if (context.started && touchingDirections.IsGrounded)
+        if (context.started && (touchingDirections.IsGrounded || CanUseCoyoteTime()))
         {
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpImpulse);
+            isJumping = true;
+            verticalVelocity = initialJumpForce;
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0f);
+            isJumpButtonHeld = true;
+            if (CanUseCoyoteTime())
+            {
+                canUseCoyote = false;
+                Debug.Log("Coyote Time Used for Jump");
+            }
         }
+
+        if (context.canceled && isJumping)
+        {
+            isJumpButtonHeld = false;
+        }
+    }
+
+    private bool CanUseCoyoteTime()
+    {
+        return canUseCoyote && Time.time < lastTimeGrounded + coyoteTimeDuration && !touchingDirections.IsGrounded;
     }
 
     void CheckForDoubleTap(float moveDirection)
