@@ -175,7 +175,7 @@ public class PlayerController : MonoBehaviour
         
         if (isJumping)
         {
-            if (verticalVelocity > 0 && isJumpButtonHeld)
+            /*if (verticalVelocity > 0 && isJumpButtonHeld)
             {
                 // While holding and going up, reduce gravity's effect
                 verticalVelocity -= (gravityStrength * (1f - jumpCutOffMultiplier)) * Time.fixedDeltaTime;
@@ -190,7 +190,8 @@ public class PlayerController : MonoBehaviour
             {
                 // Falling
                 verticalVelocity -= gravityStrength * fallGravityMultiplier * Time.fixedDeltaTime;
-            }
+            }*/
+            verticalVelocity -= gravityStrength * fallGravityMultiplier * Time.fixedDeltaTime;
 
             transform.Translate(Vector3.up * verticalVelocity * Time.fixedDeltaTime);
 
