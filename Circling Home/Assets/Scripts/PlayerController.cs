@@ -163,6 +163,7 @@ public class PlayerController : MonoBehaviour
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0f);
             isJumpButtonHeld = true;
             jumpInputBuffered = false; // Clear the buffer after using it
+            Debug.Log("Buffer Jump Triggered");
         }
 
         wasGroundedLastFrame = touchingDirections.IsGrounded;
