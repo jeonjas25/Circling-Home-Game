@@ -176,7 +176,7 @@ MonoBehaviour:
   dashDuration: 0.2
   doubleTapThreshold: 0.3
   jumpImpulse: 14
-  airWalkSpeed: 8
+  airWalkSpeed: 10
   maxHealth: 100
   currentHealth: 0
   respawnPosition: {x: 0, y: 0}
@@ -549,7 +549,7 @@ MonoBehaviour:
   meleeAttackDamage: 20
   meleeAttackCooldown: 1
   chargeBar: {fileID: 0}
-  rushDistance: 10
+  rushDistance: 5
   rushSpeed: 20
   rushDuration: 2
   rushDamage: 40
