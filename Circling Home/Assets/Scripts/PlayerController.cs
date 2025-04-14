@@ -98,6 +98,10 @@ public class PlayerController : MonoBehaviour
     public float coyoteTimeDuration = 0.15f;
     private bool wasGroundedLastFrame = false;
 
+    private bool jumpInputBuffered = false;
+    private float jumpBufferTimeCounter;
+    public float jumpBufferDuration = 0.2f;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -138,6 +142,27 @@ public class PlayerController : MonoBehaviour
         {
             lastTimeGrounded = Time.time;
             canUseCoyote = true;
+        }
+
+            // Handle jump buffering
+        if (jumpInputBuffered)
+        {
+            jumpBufferTimeCounter -= Time.deltaTime;
+            if (jumpBufferTimeCounter <= 0)
+            {
+                jumpInputBuffered = false; // Buffer timed out
+            }
+        }
+
+        // Check if we just landed AND we have a buffered jump
+        if (touchingDirections.IsGrounded && !wasGroundedLastFrame && jumpInputBuffered)
+        {
+            // Trigger the jump!
+            isJumping = true;
+            verticalVelocity = initialJumpForce;
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0f);
+            isJumpButtonHeld = true;
+            jumpInputBuffered = false; // Clear the buffer after using it
         }
 
         wasGroundedLastFrame = touchingDirections.IsGrounded;
@@ -212,16 +237,25 @@ public class PlayerController : MonoBehaviour
     public void OnJump(InputAction.CallbackContext context)
     {
         // todo check if alive
-        if (context.started && (touchingDirections.IsGrounded || CanUseCoyoteTime()))
+        if (context.started)
         {
-            isJumping = true;
-            verticalVelocity = initialJumpForce;
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0f);
-            isJumpButtonHeld = true;
-            if (CanUseCoyoteTime())
+            if (touchingDirections.IsGrounded || CanUseCoyoteTime())
             {
-                canUseCoyote = false;
-                Debug.Log("Coyote Time Used for Jump");
+                isJumping = true;
+                verticalVelocity = initialJumpForce;
+                rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0f);
+                isJumpButtonHeld = true;
+                if (CanUseCoyoteTime())
+                {
+                    canUseCoyote = false;
+                    Debug.Log("Coyote Time Used for Jump");
+                }
+                jumpInputBuffered = false;
+            }
+            else 
+            {
+                jumpInputBuffered = true;
+                jumpBufferTimeCounter = jumpBufferDuration;
             }
         }
 
