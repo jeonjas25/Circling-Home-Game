@@ -189,7 +189,7 @@ MonoBehaviour:
   initialJumpForce: 20
   gravityStrength: 20
   fallGravityMultiplier: 3
-  jumpCutOffMultiplier: 0.7
+  jumpCutOffMultiplier: 0.8
   maxJumpVelocity: 30
   coyoteTimeDuration: 0.15
   jumpBufferDuration: 0.2
