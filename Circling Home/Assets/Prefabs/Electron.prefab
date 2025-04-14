@@ -186,12 +186,13 @@ MonoBehaviour:
   isMovingLeft: 0
   isMovingRight: 0
   xLimitLeft: -16
-  initialJumpForce: 18
+  initialJumpForce: 20
   gravityStrength: 20
   fallGravityMultiplier: 3
   jumpCutOffMultiplier: 0.7
   maxJumpVelocity: 30
   coyoteTimeDuration: 0.15
+  jumpBufferDuration: 0.2
 --- !u!114 &6720097944080602899
 MonoBehaviour:
   m_ObjectHideFlags: 0
