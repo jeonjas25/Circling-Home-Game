@@ -90,8 +90,7 @@ public class PlayerController : MonoBehaviour
     public float gravityStrength = 20f;
     public float fallGravityMultiplier = 2.5f;
     private bool isJumpButtonHeld = false;
-    public float jumpCutOffMultiplier = 0.5f;
-    public float maxJumpVelocity = 30f;
+    public float variableJumpHeightMult = 0.5f;
 
     private bool canUseCoyote = false;
     private float lastTimeGrounded;
@@ -178,22 +177,6 @@ public class PlayerController : MonoBehaviour
         
         if (isJumping)
         {
-            /*if (verticalVelocity > 0 && isJumpButtonHeld)
-            {
-                // While holding and going up, reduce gravity's effect
-                verticalVelocity -= (gravityStrength * (1f - jumpCutOffMultiplier)) * Time.fixedDeltaTime;
-                verticalVelocity = Mathf.Min(verticalVelocity, maxJumpVelocity);
-            }
-            else if (verticalVelocity > 0 && !isJumpButtonHeld)
-            {
-                // If button released while going up, start falling sooner
-                verticalVelocity -= gravityStrength * fallGravityMultiplier * Time.fixedDeltaTime;
-            }
-            else
-            {
-                // Falling
-                verticalVelocity -= gravityStrength * fallGravityMultiplier * Time.fixedDeltaTime;
-            }*/
             verticalVelocity -= gravityStrength * fallGravityMultiplier * Time.fixedDeltaTime;
 
             transform.Translate(Vector3.up * verticalVelocity * Time.fixedDeltaTime);
@@ -242,45 +225,44 @@ public class PlayerController : MonoBehaviour
     public void OnJump(InputAction.CallbackContext context)
     {
         // todo check if alive
-        if (context.started)
+       if (context.started && (touchingDirections.IsGrounded || CanUseCoyoteTime()))
         {
-            if (touchingDirections.IsGrounded || CanUseCoyoteTime())
+            isJumping = true;
+            verticalVelocity = initialJumpForce; // Set to the base jump force
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0f);
+
+            // Apply initial horizontal boost (if you still have this)
+            if (moveInput.x > 0)
             {
-                isJumping = true;
-                verticalVelocity = initialJumpForce;
-                rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0f);
-
-                // Apply the initial horizontal boost
-                if (moveInput.x > 0)
-                {
-                    rb.linearVelocity += Vector2.right * initialHorizontalJumpBoost;
-                }
-                else if (moveInput.x < 0)
-                {
-                    rb.linearVelocity += Vector2.left * initialHorizontalJumpBoost;
-                }
-
-                Debug.Log("Horizontal Velocity after potential boost: " + rb.velocity.x);
-
-                isJumpButtonHeld = true;
-                if (CanUseCoyoteTime())
-                {
-                    canUseCoyote = false;
-                    Debug.Log("Coyote Time Used for Jump");
-                }
-                jumpInputBuffered = false;
+                rb.linearVelocity += Vector2.right * initialHorizontalJumpBoost;
             }
-            else 
+            else if (moveInput.x < 0)
             {
-                jumpInputBuffered = true;
-                jumpBufferTimeCounter = jumpBufferDuration;
+                rb.linearVelocity += Vector2.left * initialHorizontalJumpBoost;
             }
+
+            isJumpButtonHeld = true;
+
+            if (CanUseCoyoteTime())
+            {
+                Debug.Log("Coyote Time Triggered");
+                canUseCoyote = false;
+            }
+            jumpInputBuffered = false;
         }
-
-        if (context.canceled && isJumping)
+        else if (context.canceled && isJumping && verticalVelocity > 0)
         {
+            // If jump button is released early and we're still going up,
+            // reduce the vertical velocity to make the jump shorter
+            verticalVelocity *= variableJumpHeightMult;
             isJumpButtonHeld = false;
         }
+        else if (context.started && !touchingDirections.IsGrounded && !CanUseCoyoteTime())
+        {
+            jumpInputBuffered = true;
+            jumpBufferTimeCounter = jumpBufferDuration;
+        }
+
     }
 
     private bool CanUseCoyoteTime()
