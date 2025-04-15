@@ -102,6 +102,8 @@ public class PlayerController : MonoBehaviour
     private float jumpBufferTimeCounter;
     public float jumpBufferDuration = 0.2f;
 
+    public float initialHorizontalJumpBoost = 2f;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -246,6 +248,19 @@ public class PlayerController : MonoBehaviour
                 isJumping = true;
                 verticalVelocity = initialJumpForce;
                 rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0f);
+
+                // Apply the initial horizontal boost
+                if (moveInput.x > 0)
+                {
+                    rb.linearVelocity += Vector2.right * initialHorizontalJumpBoost;
+                }
+                else if (moveInput.x < 0)
+                {
+                    rb.linearVelocity += Vector2.left * initialHorizontalJumpBoost;
+                }
+
+                Debug.Log("Horizontal Velocity after potential boost: " + rb.velocity.x);
+
                 isJumpButtonHeld = true;
                 if (CanUseCoyoteTime())
                 {
