@@ -121,8 +121,9 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (transform.position.y < -8)
+        if (transform.position.y < -10)
         {
+            Debug.Log("Died due to y position");
             Die();
         }
 
