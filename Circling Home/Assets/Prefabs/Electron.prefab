@@ -187,7 +187,7 @@ MonoBehaviour:
   isMovingRight: 0
   xLimitLeft: -16
   initialJumpForce: 25
-  gravityStrength: 20
+  gravityStrength: 18
   fallGravityMultiplier: 2.5
   variableJumpHeightMult: 0.5
   coyoteTimeDuration: 0.15
