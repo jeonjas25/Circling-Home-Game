@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour
     {
         get
         {
-            if (isDashing)
+            if (isDashing && !touchingDirections.IsOnWall)
             {
                 return dashSpeed;
             }
