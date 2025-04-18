@@ -672,7 +672,7 @@ MonoBehaviour:
   currentState: 0
   patrolSpeed: 3
   patrolDirection: 1
-  raycastDistance: 3
+  raycastDistance: 5
   platformLayer:
     serializedVersion: 2
     m_Bits: 512
@@ -683,6 +683,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   fireRate: 1
+  originalFireRate: 0
   fireCooldown: 2
   firePoint1: {fileID: 2276525311107922149}
   firePoint2: {fileID: 195264695893310374}
@@ -697,3 +698,7 @@ MonoBehaviour:
   healthBar: {fileID: 4377633015703844984}
   healPotionPrefab: {fileID: 3836426031814753737, guid: 7d4e5bcc9e2ea1d47ab163bc5fee36a8, type: 3}
   potionDropChance: 0.5
+  slowPercentage: 0
+  slowTimer: 0
+  isSlowed: 0
+  originalSpeed: 0
