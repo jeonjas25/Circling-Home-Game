@@ -320,5 +320,6 @@ public class PlayerController : MonoBehaviour
         currentHealth = maxHealth;
         healthBar.Reset();
         chargeBar.ResetCharge();
+        FallingPlatform.ResetAllPlatforms();
     }
 }
