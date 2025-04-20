@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 2342593208369490227}
   - component: {fileID: 7782993524847887414}
   - component: {fileID: 5874427226174427461}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Charger
-  m_TagString: Untagged
+  m_TagString: Charger
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
