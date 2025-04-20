@@ -119,6 +119,15 @@ public class PlayerCombat : MonoBehaviour
                     chargeBar.AddCharge(meleeAttackDamage);
                 }
             }
+            else if (enemy.CompareTag("Charger"))
+            {
+                ChargerController chargerController = enemy.GetComponent<ChargerController>();
+                if (chargerController != null)
+                {
+                    chargerController.TakeDamage(meleeAttackDamage);
+                    chargeBar.AddCharge(meleeAttackDamage);
+                }
+            }
         }
     }
 
@@ -252,6 +261,18 @@ public class PlayerCombat : MonoBehaviour
                         {
                             laserController.TakeDamage(rushDamage);
                             damagedEnemies.Add(enemy); // Add to the list
+                        }
+                    }
+                }
+                else if (enemy.CompareTag("Charger"))
+                {
+                    if (!damagedEnemies.Contains(enemy))
+                    {
+                        ChargerController chargerController = enemy.GetComponent<ChargerController>();
+                        if (chargerController != null)
+                        {
+                            chargerController.TakeDamage(rushDamage);
+                            damagedEnemies.Add(enemy);
                         }
                     }
                 }

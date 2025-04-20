@@ -20,6 +20,10 @@ public class ChargerController : MonoBehaviour
     public Sprite angrySprite;
     private SpriteRenderer spriteRenderer;
 
+    public float maxHealth = 30f;
+    public float currentHealth;
+    public EnemyHealthBar healthBar;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -28,6 +32,8 @@ public class ChargerController : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         FindPlayer();
         spriteRenderer.sprite = sleepingSprite;
+        healthBar.SetMaxHealth(maxHealth);
+        currentHealth = maxHealth;
     }
 
     void FindPlayer()
@@ -109,5 +115,22 @@ public class ChargerController : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void TakeDamage(float damageAmount)
+    {
+        currentHealth -= damageAmount;
+        healthBar.SetHealth(currentHealth);
+        Debug.Log("Damage: " + damageAmount);
+        if (currentHealth <= 0)
+        {
+            Die();
+            Debug.Log("Charger died!");
+        }
+    }
+
+    void Die()
+    {
+        Destroy(gameObject);
     }
 }

@@ -94,6 +94,15 @@ public class LaserBulletController : MonoBehaviour
             hasCollided = true;
             Destroy(gameObject);
         }
+        else if (hitInfo.gameObject.CompareTag("Charger"))
+        {
+            ChargerController chargerController = hitInfo.gameObject.GetComponent<ChargerController>();
+            Debug.Log(hitInfo.name);
+            chargerController.TakeDamage(damage);
+            chargeBar.AddCharge(damage);
+            hasCollided = true;
+            Destroy(gameObject);
+        }
     }
 
     public void SlowDown(float percentage, float duration)
