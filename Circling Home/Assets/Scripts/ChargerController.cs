@@ -24,6 +24,11 @@ public class ChargerController : MonoBehaviour
     public float currentHealth;
     public EnemyHealthBar healthBar;
 
+    public float slowPercentage = 0f;
+    public float slowTimer = 0f;
+    public bool isSlowed = false;
+    public float originalSpeed;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -34,6 +39,7 @@ public class ChargerController : MonoBehaviour
         spriteRenderer.sprite = sleepingSprite;
         healthBar.SetMaxHealth(maxHealth);
         currentHealth = maxHealth;
+        originalSpeed = moveSpeed;
     }
 
     void FindPlayer()
@@ -68,6 +74,23 @@ public class ChargerController : MonoBehaviour
 
             if (!isCharging)
             {
+                if (isSlowed)
+                {
+                    moveSpeed = originalSpeed * (1f - slowPercentage);
+                    slowTimer -= Time.deltaTime;
+                    if (slowTimer <= 0)
+                    {
+                        isSlowed = false;
+                        slowPercentage = 0f;
+                        moveSpeed = originalSpeed;
+                        Debug.Log("Slow Stopped");
+                    }
+                }
+                else 
+                {
+                    moveSpeed = originalSpeed;
+                }
+                
                 // Move towards the player
                 rb.linearVelocity = new Vector2(moveDirection * moveSpeed, 0f);
 
@@ -81,6 +104,23 @@ public class ChargerController : MonoBehaviour
             }
             else
             {
+                if (isSlowed)
+                {
+                    moveSpeed = originalSpeed * (1f - slowPercentage);
+                    slowTimer -= Time.deltaTime;
+                    if (slowTimer <= 0)
+                    {
+                        isSlowed = false;
+                        slowPercentage = 0f;
+                        moveSpeed = originalSpeed;
+                        Debug.Log("Slow Stopped");
+                    }
+                }
+                else 
+                {
+                    moveSpeed = originalSpeed;
+                }
+
                 // Charge towards the player
                 rb.linearVelocity = new Vector2(moveDirection * moveSpeed * chargeSpeedMultiplier, 0f);
 
@@ -128,6 +168,14 @@ public class ChargerController : MonoBehaviour
             Debug.Log("Charger died!");
         }
     }
+
+    public void SlowDown(float percentage, float duration)
+    {
+        Debug.Log("Charger Slowed");
+        slowPercentage = percentage;
+        slowTimer = duration;
+        isSlowed = true;
+    }   
 
     void Die()
     {

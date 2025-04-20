@@ -78,6 +78,13 @@ public class ChainLightningBoltController : MonoBehaviour
             firstEnemyHit = other.gameObject;
             HitEnemy(firstEnemyHit);
         }
+
+        else if (other.CompareTag("Charger") && !hitEnemies.Contains(other.gameObject))
+        {
+            Debug.Log("Lightning Hit first Charger");
+            firstEnemyHit = other.gameObject;
+            HitEnemy(firstEnemyHit);
+        }
     }
 
     void HitEnemy(GameObject enemyObject)
@@ -90,6 +97,18 @@ public class ChainLightningBoltController : MonoBehaviour
                 laserController.TakeDamage(damageAmount);
                 Debug.Log("Dealt " + damageAmount + " damage to " + enemyObject.name);
                 laserController.SlowDown(slowAmount, slowDuration);
+            }
+
+            // add slow effect and slow projectile stuff here
+        }
+        else if (enemyObject.CompareTag("Charger"))
+        {
+            ChargerController chargerController = enemyObject.GetComponent<ChargerController>();
+            if (chargerController != null)
+            {
+                chargerController.TakeDamage(damageAmount);
+                Debug.Log("Dealt " + damageAmount + " damage to " + enemyObject.name);
+                chargerController.SlowDown(slowAmount, slowDuration);
             }
 
             // add slow effect and slow projectile stuff here
@@ -118,6 +137,15 @@ public class ChainLightningBoltController : MonoBehaviour
         foreach (Collider2D enemyCollider in nearbyEnemies)
         {
             if (enemyCollider.CompareTag("Laser") && !hitEnemies.Contains(enemyCollider.gameObject))
+            {
+                float distance = Vector2.Distance(transform.position, enemyCollider.transform.position);
+                if (distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    closestEnemy = enemyCollider.gameObject;
+                }
+            }
+            else if (enemyCollider.CompareTag("Charger") && !hitEnemies.Contains(enemyCollider.gameObject))
             {
                 float distance = Vector2.Distance(transform.position, enemyCollider.transform.position);
                 if (distance < closestDistance)
