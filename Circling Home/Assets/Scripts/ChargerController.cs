@@ -11,6 +11,7 @@ public class ChargerController : MonoBehaviour
     public float damageAmount = 10f;
     public float collisionDisableTime = 0.5f;
     public float detectionRange = 15f;
+    public float verticalTrackThreshold = 2f;
 
     private Rigidbody2D rb;
     private Collider2D enemyCollider;
@@ -61,8 +62,9 @@ public class ChargerController : MonoBehaviour
         }
 
         float distanceToPlayer = Vector2.Distance(transform.position, playerTarget.position);
+        float verticalDistance = Mathf.Abs(playerTarget.position.y - transform.position.y);
 
-        if (distanceToPlayer <= detectionRange)
+        if (distanceToPlayer <= detectionRange && verticalDistance <= verticalTrackThreshold)
         {
             // Player detected, switch to angry sprite
             spriteRenderer.sprite = angrySprite;
@@ -90,7 +92,7 @@ public class ChargerController : MonoBehaviour
                 {
                     moveSpeed = originalSpeed;
                 }
-                
+
                 // Move towards the player
                 rb.linearVelocity = new Vector2(moveDirection * moveSpeed, 0f);
 
