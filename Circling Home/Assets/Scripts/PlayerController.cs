@@ -169,6 +169,14 @@ public class PlayerController : MonoBehaviour
         }
 
         wasGroundedLastFrame = touchingDirections.IsGrounded;
+
+        // full charge key for testing (remove later)
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            Debug.Log("Charge filled");
+            chargeBar.AddCharge(100f);
+        }
+
     }
 
     void FixedUpdate()

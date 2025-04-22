@@ -5,7 +5,7 @@ public class ChargeBar : MonoBehaviour
 {
     public Image foregroundImage;
     public float maxCharge = 100f;
-    private float currentCharge = 100f;
+    private float currentCharge = 0f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
