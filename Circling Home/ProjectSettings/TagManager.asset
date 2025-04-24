@@ -8,6 +8,7 @@ TagManager:
   - Electron Bullet
   - Ground
   - Charger
+  - Ladder
   layers:
   - Default
   - TransparentFX

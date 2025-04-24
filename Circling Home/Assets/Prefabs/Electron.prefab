@@ -80,6 +80,7 @@ GameObject:
   - component: {fileID: -6188018592111962195}
   - component: {fileID: 62652156699140836}
   - component: {fileID: 3403756593114620687}
+  - component: {fileID: -1941818854852610693}
   m_Layer: 8
   m_Name: Electron
   m_TagString: Player
@@ -563,3 +564,16 @@ MonoBehaviour:
   raycastOffset: {x: 0.24, y: -0.75}
   raycastDistance: 1.5
   touchingDirections: {fileID: 0}
+--- !u!114 &-1941818854852610693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9019585867726838584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83a826472837a8048ae8b62dafcf4abd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 8
