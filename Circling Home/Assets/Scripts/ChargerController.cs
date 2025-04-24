@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic; 
 
 public class ChargerController : MonoBehaviour
 {
@@ -30,6 +31,11 @@ public class ChargerController : MonoBehaviour
     public bool isSlowed = false;
     public float originalSpeed;
 
+    private Vector3 initialPosition;
+    private Quaternion initialRotation;
+    private Sprite initialSprite;
+    private static List<ChargerController> existingChargers = new List<ChargerController>();
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -41,6 +47,11 @@ public class ChargerController : MonoBehaviour
         healthBar.SetMaxHealth(maxHealth);
         currentHealth = maxHealth;
         originalSpeed = moveSpeed;
+
+        initialPosition = transform.position;
+        initialRotation = transform.rotation;
+        initialSprite = sleepingSprite;
+        existingChargers.Add(this);
     }
 
     void FindPlayer()
@@ -181,6 +192,57 @@ public class ChargerController : MonoBehaviour
 
     void Die()
     {
-        Destroy(gameObject);
+        gameObject.SetActive(false);
+    }
+
+    void OnDisable()
+    {
+        Debug.Log(gameObject.name + " - Charger removed from existingChargers");
+        existingChargers.Remove(this);
+    }
+
+    void OnEnable()
+    {
+        if (!existingChargers.Contains(this))
+        {
+            Debug.Log(gameObject.name + " - Charger added to existingChargers");
+            existingChargers.Add(this);
+        }
+    }
+
+    public void ResetEnemy()
+    {
+        transform.position = initialPosition;
+        transform.rotation = initialRotation;
+        spriteRenderer.sprite = initialSprite;
+        currentHealth = maxHealth;
+        isCharging = false;
+        currentChargeDelay = 0f;
+        isSlowed = false;
+        slowPercentage = 0f;
+        slowTimer = 0f;
+        moveSpeed = originalSpeed;
+        rb.linearVelocity = Vector2.zero;
+        enemyCollider.enabled = true;
+        gameObject.SetActive(true);
+
+        FindPlayer(); // Ensure it tries to find the player again
+        healthBar.SetHealth(maxHealth);
+    }
+
+    public static void ResetAllChargers()
+    {
+        Debug.Log("ResetAllChargers() called. List count: " + existingChargers.Count);
+        foreach (ChargerController charger in existingChargers)
+        {
+            if (charger == null)
+            {
+                Debug.LogError("Found a null entry in existingChargers!");
+                continue;
+            }
+            Debug.Log("Attempting to reset: " + charger.gameObject.name);
+            charger.ResetEnemy();
+            Debug.Log(charger.gameObject.name + " - ResetEnemy() called.");
+        }
     }
 }

@@ -329,5 +329,6 @@ public class PlayerController : MonoBehaviour
         healthBar.Reset();
         chargeBar.ResetCharge();
         FallingPlatform.ResetAllPlatforms();
+        // ChargerController.ResetAllChargers();
     }
 }
