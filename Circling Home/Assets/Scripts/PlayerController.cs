@@ -177,6 +177,13 @@ public class PlayerController : MonoBehaviour
             chargeBar.AddCharge(100f);
         }
 
+        // teleport to checkpoint
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            GameObject checkpoint = GameObject.FindGameObjectWithTag("Checkpoint");
+            transform.position = checkpoint.transform.position;
+        }
+
     }
 
     void FixedUpdate()
@@ -190,7 +197,7 @@ public class PlayerController : MonoBehaviour
             {
                 currentGravity *= 0.5f; // Reduce gravity during air dash (adjust multiplier as needed)
             }
-            
+
             verticalVelocity -= gravityStrength * fallGravityMultiplier * Time.fixedDeltaTime;
 
             transform.Translate(Vector3.up * verticalVelocity * Time.fixedDeltaTime);

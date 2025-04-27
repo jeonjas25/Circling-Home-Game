@@ -9,6 +9,7 @@ TagManager:
   - Ground
   - Charger
   - Ladder
+  - Checkpoint
   layers:
   - Default
   - TransparentFX
