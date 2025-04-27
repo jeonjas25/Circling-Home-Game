@@ -185,6 +185,12 @@ public class PlayerController : MonoBehaviour
         
         if (isJumping)
         {
+            float currentGravity = gravityStrength * fallGravityMultiplier;
+            if (isDashing && !touchingDirections.IsGrounded)
+            {
+                currentGravity *= 0.5f; // Reduce gravity during air dash (adjust multiplier as needed)
+            }
+            
             verticalVelocity -= gravityStrength * fallGravityMultiplier * Time.fixedDeltaTime;
 
             transform.Translate(Vector3.up * verticalVelocity * Time.fixedDeltaTime);

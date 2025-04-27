@@ -174,7 +174,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkSpeed: 10
-  dashSpeed: 20
+  dashSpeed: 30
   dashDuration: 0.2
   doubleTapThreshold: 0.3
   jumpImpulse: 14
