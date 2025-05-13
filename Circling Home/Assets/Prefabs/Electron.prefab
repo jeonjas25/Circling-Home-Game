@@ -174,7 +174,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkSpeed: 10
-  dashSpeed: 30
+  dashSpeed: 35
   dashDuration: 0.2
   doubleTapThreshold: 0.3
   jumpImpulse: 14
@@ -549,7 +549,7 @@ MonoBehaviour:
   meleeAttackPoint: {fileID: 8873960324569481695}
   meleeAttackRange: 1.99
   meleeAttackDamage: 20
-  meleeAttackCooldown: 1
+  meleeAttackCooldown: 0.35
   chargeBar: {fileID: 0}
   rushDistance: 5
   rushSpeed: 20
