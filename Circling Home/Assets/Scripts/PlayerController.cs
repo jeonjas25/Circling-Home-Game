@@ -340,7 +340,7 @@ public class PlayerController : MonoBehaviour
         transform.rotation = Quaternion.identity;
         currentHealth = maxHealth;
         healthBar.Reset();
-        chargeBar.ResetCharge();
+        // chargeBar.ResetCharge();
         FallingPlatform.ResetAllPlatforms();
         // ChargerController.ResetAllChargers();
     }
