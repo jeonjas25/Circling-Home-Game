@@ -102,6 +102,7 @@ public class PlayerController : MonoBehaviour
     public float jumpBufferDuration = 0.2f;
 
     public float initialHorizontalJumpBoost = 2f;
+    private int facingDirection = 1;
 
     void Awake()
     {
@@ -184,6 +185,21 @@ public class PlayerController : MonoBehaviour
             transform.position = checkpoint.transform.position;
         }
 
+        // Persist facing direction for IsMovingLeft and IsMovingRight (for animator)
+        if (!IsMoving && !isDashing)
+        {
+            if (facingDirection == 1)
+            {
+                IsMovingRight = true;
+                IsMovingLeft = false;
+            }
+            else if (facingDirection == -1)
+            {
+                IsMovingLeft = true;
+                IsMovingRight = false;
+            }
+        }
+
     }
 
     void FixedUpdate()
@@ -231,6 +247,15 @@ public class PlayerController : MonoBehaviour
             IsMovingRight = moveInput.x > 0;
             IsMovingLeft = moveInput.x < 0;
 
+            if (moveInput.x > 0)
+            {
+                facingDirection = 1; // Set facing right
+            }
+            else if (moveInput.x < 0)
+            {
+                facingDirection = -1; // Set facing left
+            }
+
             if (context.started)
             {
                 CheckForDoubleTap(moveInput.x);
@@ -242,6 +267,7 @@ public class PlayerController : MonoBehaviour
             IsMovingRight = false;
         }
     }
+
 
     public void OnJump(InputAction.CallbackContext context)
     {
