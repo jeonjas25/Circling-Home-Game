@@ -6,7 +6,7 @@ public class PlayerController : MonoBehaviour
     public float walkSpeed;
     public float dashSpeed = 20f;
     public float dashDuration = 0.2f;
-    public float doubleTapThreshold = 0.3f;
+    //public float doubleTapThreshold = 0.3f;
     public float jumpImpulse;
     public float airWalkSpeed;
     public float maxHealth = 100f;
@@ -104,6 +104,9 @@ public class PlayerController : MonoBehaviour
     public float initialHorizontalJumpBoost = 2f;
     private int facingDirection = 1;
 
+    public float dashCooldown = 0.5f;
+    private float nextDashTime;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -116,6 +119,7 @@ public class PlayerController : MonoBehaviour
     {
         currentHealth = maxHealth;
         respawnPosition = transform.position;
+        nextDashTime = Time.time;
     }
 
     // Update is called once per frame
@@ -256,10 +260,10 @@ public class PlayerController : MonoBehaviour
                 facingDirection = -1; // Set facing left
             }
 
-            if (context.started)
+            /*if (context.started)
             {
                 CheckForDoubleTap(moveInput.x);
-            }
+            }*/
         }
         else
         {
@@ -317,7 +321,7 @@ public class PlayerController : MonoBehaviour
         return canUseCoyote && Time.time < lastTimeGrounded + coyoteTimeDuration && !touchingDirections.IsGrounded;
     }
 
-    void CheckForDoubleTap(float moveDirection)
+    /*void CheckForDoubleTap(float moveDirection)
     {
         float currentTime = Time.time;
 
@@ -328,6 +332,29 @@ public class PlayerController : MonoBehaviour
 
         lastMoveTime = currentTime;
         lastMoveDirection = moveDirection;
+    }*/
+    public void OnDash(InputAction.CallbackContext context)
+    {
+        if (context.started && !isDashing && Time.time >= nextDashTime) // Only dash if not already dashing
+        {
+            float dashDirection = 0f;
+
+            if (facingDirection == 1)
+            {
+                dashDirection = 1f; // Dash right
+            }
+            else if (facingDirection == -1)
+            {
+                dashDirection = -1f; // Dash left
+            }
+            else
+            {
+                dashDirection = 1f;
+            }
+
+            Dash(dashDirection);
+            nextDashTime = Time.time + dashCooldown;
+        }
     }
 
     void Dash(float direction)
