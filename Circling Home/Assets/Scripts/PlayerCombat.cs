@@ -34,6 +34,9 @@ public class PlayerCombat : MonoBehaviour
     public Vector2 raycastOffset = new Vector2(0.24f, -0.75f);
     public float raycastDistance = 1.5f;
     public TouchingDirections touchingDirections;
+    private bool isSuperCharging = false;
+    private float superAttackTimer = 0f;
+    public float superAttackHoldDuration = 1f;
 
     void Awake()
     {
@@ -72,7 +75,7 @@ public class PlayerCombat : MonoBehaviour
         }
     }
 
-    public void OnSuper(InputAction.CallbackContext context)
+    /*public void OnSuper(InputAction.CallbackContext context)
     {
         if (context.started)
         {
@@ -89,7 +92,8 @@ public class PlayerCombat : MonoBehaviour
                 }
             }
         }
-    }
+    }*/
+
     void MeleeAttack()
     {
         animator.SetTrigger("Slash");
@@ -306,10 +310,42 @@ public class PlayerCombat : MonoBehaviour
         
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        // Check if the J key is held down
+        if (Input.GetKey(KeyCode.J))
+        {
+            if (!isSuperCharging)
+            {
+                isSuperCharging = true;
+                superAttackTimer = 0f; // Start the timer when J is first pressed
+            }
+
+            if (isSuperCharging)
+            {
+                superAttackTimer += Time.deltaTime; // Increment timer
+
+                if (chargeBar.IsChargeFull() && superAttackTimer >= superAttackHoldDuration) //Check timer
+                {
+                    //  IMPORTANT:  Only trigger ONCE.
+                    if (isMeleeMode)
+                    {
+                        MeleeSuperAttack();
+                    }
+                    else
+                    {
+                        RangedSuperAttack();
+                    }
+                    isSuperCharging = false; // Reset so it doesn't repeat.
+                    superAttackTimer = 0f;
+                }
+            }
+        }
+        else if (isSuperCharging)
+        {
+            isSuperCharging = false;
+            superAttackTimer = 0f;
+        }
     }
 
     void OnDrawGizmosSelected()

@@ -176,7 +176,6 @@ MonoBehaviour:
   walkSpeed: 10
   dashSpeed: 35
   dashDuration: 0.2
-  doubleTapThreshold: 0.3
   jumpImpulse: 14
   airWalkSpeed: 10
   maxHealth: 100
@@ -195,6 +194,7 @@ MonoBehaviour:
   coyoteTimeDuration: 0.15
   jumpBufferDuration: 0.25
   initialHorizontalJumpBoost: 2
+  dashCooldown: 0.5
 --- !u!114 &6720097944080602899
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -581,6 +581,7 @@ MonoBehaviour:
   raycastOffset: {x: 0.24, y: -0.75}
   raycastDistance: 1.5
   touchingDirections: {fileID: 0}
+  superAttackHoldDuration: 1
 --- !u!114 &-1941818854852610693
 MonoBehaviour:
   m_ObjectHideFlags: 0
