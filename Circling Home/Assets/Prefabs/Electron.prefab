@@ -581,7 +581,7 @@ MonoBehaviour:
   raycastOffset: {x: 0.24, y: -0.75}
   raycastDistance: 1.5
   touchingDirections: {fileID: 0}
-  superAttackHoldDuration: 1
+  superAttackHoldDuration: 0.7
 --- !u!114 &-1941818854852610693
 MonoBehaviour:
   m_ObjectHideFlags: 0
