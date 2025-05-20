@@ -2541,21 +2541,25 @@ PrefabInstance:
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3397859668679138169, guid: db13dd55a5e72bb4087a83174aef45a1, type: 3}
+      propertyPath: activationDistance
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3397859668679138169, guid: db13dd55a5e72bb4087a83174aef45a1, type: 3}
       propertyPath: 'points.Array.data[0]'
       value: 
-      objectReference: {fileID: 634829998}
+      objectReference: {fileID: 36234627}
     - target: {fileID: 3397859668679138169, guid: db13dd55a5e72bb4087a83174aef45a1, type: 3}
       propertyPath: 'points.Array.data[1]'
       value: 
-      objectReference: {fileID: 1226016623}
+      objectReference: {fileID: 634829998}
     - target: {fileID: 3397859668679138169, guid: db13dd55a5e72bb4087a83174aef45a1, type: 3}
       propertyPath: 'points.Array.data[2]'
       value: 
-      objectReference: {fileID: 1021860296}
+      objectReference: {fileID: 1226016623}
     - target: {fileID: 3397859668679138169, guid: db13dd55a5e72bb4087a83174aef45a1, type: 3}
       propertyPath: 'points.Array.data[3]'
       value: 
-      objectReference: {fileID: 36234627}
+      objectReference: {fileID: 1021860296}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
