@@ -39,34 +39,37 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
-    public bool IsMoving { 
-        get 
+    public bool IsMoving
+    {
+        get
         {
             return isMoving;
-        } 
-        private set 
+        }
+        private set
         {
             isMoving = value;
             animator.SetBool("isMoving", value);
         }
     }
-    public bool IsMovingLeft { 
-        get 
+    public bool IsMovingLeft
+    {
+        get
         {
             return isMovingLeft;
-        } 
-        private set 
+        }
+        private set
         {
             isMovingLeft = value;
             animator.SetBool("isMovingLeft", value);
         }
     }
-    public bool IsMovingRight { 
-        get 
+    public bool IsMovingRight
+    {
+        get
         {
             return isMovingRight;
-        } 
-        private set 
+        }
+        private set
         {
             isMovingRight = value;
             animator.SetBool("isMovingRight", value);
@@ -106,6 +109,10 @@ public class PlayerController : MonoBehaviour
 
     public float dashCooldown = 0.5f;
     private float nextDashTime;
+
+    private bool isOnJumpPad = false;
+    public float jumpPadMultiplier = 2.0f;
+
 
     void Awake()
     {
@@ -151,7 +158,7 @@ public class PlayerController : MonoBehaviour
             canUseCoyote = true;
         }
 
-            // Handle jump buffering
+        // Handle jump buffering
         if (jumpInputBuffered)
         {
             jumpBufferTimeCounter -= Time.deltaTime;
@@ -209,7 +216,7 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         rb.linearVelocity = new Vector2(moveInput.x * CurrentMoveSpeed, rb.linearVelocity.y);
-        
+
         if (isJumping)
         {
             float currentGravity = gravityStrength * fallGravityMultiplier;
@@ -276,10 +283,10 @@ public class PlayerController : MonoBehaviour
     public void OnJump(InputAction.CallbackContext context)
     {
         // todo check if alive
-       if (context.started && (touchingDirections.IsGrounded || CanUseCoyoteTime()))
+        if (context.started && (touchingDirections.IsGrounded || CanUseCoyoteTime()))
         {
             isJumping = true;
-            verticalVelocity = initialJumpForce; // Set to the base jump force
+            verticalVelocity = initialJumpForce * (isOnJumpPad ? jumpPadMultiplier : 1f);
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0f);
 
             // Apply initial horizontal boost (if you still have this)
@@ -396,5 +403,10 @@ public class PlayerController : MonoBehaviour
         // chargeBar.ResetCharge();
         FallingPlatform.ResetAllPlatforms();
         // ChargerController.ResetAllChargers();
+    }
+    
+    public void SetOnJumpPad(bool onJumpPad)
+    {
+        isOnJumpPad = onJumpPad;
     }
 }
