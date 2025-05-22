@@ -196,6 +196,17 @@ public class PlayerController : MonoBehaviour
             transform.position = checkpoint.transform.position;
         }
 
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            Vector3 mouseScreenPosition = Input.mousePosition;
+            mouseScreenPosition.z = Camera.main.WorldToScreenPoint(transform.position).z;
+
+            Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(mouseScreenPosition);
+
+            transform.position = mouseWorldPosition;
+            Debug.Log("Teleported to mouse position: " + mouseWorldPosition);
+        }
+
         // Persist facing direction for IsMovingLeft and IsMovingRight (for animator)
         if (!IsMoving && !isDashing)
         {
