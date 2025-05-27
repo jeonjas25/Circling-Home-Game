@@ -195,7 +195,7 @@ MonoBehaviour:
   jumpBufferDuration: 0.25
   initialHorizontalJumpBoost: 2
   dashCooldown: 0.5
-  jumpPadMultiplier: 2
+  jumpPadMultiplier: 1.5
 --- !u!114 &6720097944080602899
 MonoBehaviour:
   m_ObjectHideFlags: 0
