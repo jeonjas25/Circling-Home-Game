@@ -177,7 +177,7 @@ MonoBehaviour:
   dashSpeed: 35
   dashDuration: 0.2
   jumpImpulse: 14
-  airWalkSpeed: 10
+  airWalkSpeed: 12
   maxHealth: 100
   currentHealth: 0
   respawnPosition: {x: 0, y: 0}
@@ -195,6 +195,7 @@ MonoBehaviour:
   jumpBufferDuration: 0.25
   initialHorizontalJumpBoost: 2
   dashCooldown: 0.5
+  jumpPadMultiplier: 2
 --- !u!114 &6720097944080602899
 MonoBehaviour:
   m_ObjectHideFlags: 0
