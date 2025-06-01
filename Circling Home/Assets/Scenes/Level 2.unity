@@ -856,7 +856,7 @@ MonoBehaviour:
   melee: {fileID: 8300000, guid: 5eb414ab474b62d4c89485eb12e8ec96, type: 3}
   laser: {fileID: 8300000, guid: 8844ab06fdfbd254b92c905c2044c050, type: 3}
   lightningBolt: {fileID: 8300000, guid: 8548a039234a0c046a3d4ab40cfef353, type: 3}
-  slash: {fileID: 8300000, guid: 86cd409717a196d49856ad0068746e75, type: 3}
+  slash: {fileID: 8300000, guid: 621ea78155961e44893ffa4eb1af1226, type: 3}
   jump: {fileID: 8300000, guid: 24fb8e4902dfabe4390347ef8904ed72, type: 3}
 --- !u!4 &155630120
 Transform:
