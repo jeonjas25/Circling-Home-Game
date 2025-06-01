@@ -49,6 +49,7 @@ public class LaserController : MonoBehaviour
     public float slowTimer = 0f;
     public bool isSlowed = false;
     public float originalSpeed;
+    private AudioManager audioManager;
 
     void Awake()
     {
@@ -57,6 +58,7 @@ public class LaserController : MonoBehaviour
         healthBar.SetMaxHealth(maxHealth);
         originalSpeed = patrolSpeed;
         originalFireRate = fireRate;
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
 
     }
 
@@ -209,15 +211,16 @@ public class LaserController : MonoBehaviour
                     GameObject homingLaserBullet = Instantiate(homingBulletPrefab, firePoint2.position, Quaternion.identity);
 
                     HomingLaserBulletController homingBulletController = homingLaserBullet.GetComponent<HomingLaserBulletController>();
+                    audioManager.PlaySFX(audioManager.laser);
 
                     if (homingBulletController != null)
+                {
+                    homingBulletController.direction = directionToPlayer;
+                    if (isSlowed)
                     {
-                        homingBulletController.direction = directionToPlayer;
-                        if (isSlowed)
-                        {
-                            homingBulletController.SlowDown(0.5f, 4f);
-                        }
+                        homingBulletController.SlowDown(0.5f, 4f);
                     }
+                }
 
                     Collider2D enemyCollider = GetComponent<Collider2D>();
                     Transform homingLaserChildTransform = homingLaserBullet.transform.Find("Collider");
@@ -232,15 +235,16 @@ public class LaserController : MonoBehaviour
                     GameObject laserBullet = Instantiate(bulletPrefab, firePoint1.position, Quaternion.identity);
 
                     LaserBulletController bulletController = laserBullet.GetComponent<LaserBulletController>();
+                    audioManager.PlaySFX(audioManager.laser);
 
                     if (bulletController != null)
+                {
+                    bulletController.direction = directionToPlayer;
+                    if (isSlowed)
                     {
-                        bulletController.direction = directionToPlayer;
-                        if (isSlowed)
-                        {
-                            bulletController.SlowDown(0.5f, 4f);
-                        }
+                        bulletController.SlowDown(0.5f, 4f);
                     }
+                }
 
                     Collider2D enemyCollider = GetComponent<Collider2D>();
                     Collider2D laserCollider = laserBullet.GetComponent<Collider2D>();
