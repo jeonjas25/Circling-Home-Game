@@ -37,12 +37,14 @@ public class PlayerCombat : MonoBehaviour
     private bool isSuperCharging = false;
     private float superAttackTimer = 0f;
     public float superAttackHoldDuration = 1f;
+    private AudioManager audioManager;
 
     void Awake()
     {
         playerController = GetComponent<PlayerController>();
         animator = GetComponent<Animator>();
         touchingDirections = GetComponent<TouchingDirections>();
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
 
     public void OnAttack(InputAction.CallbackContext context)
@@ -97,6 +99,7 @@ public class PlayerCombat : MonoBehaviour
     void MeleeAttack()
     {
         animator.SetTrigger("Slash");
+        audioManager.PlaySFX(audioManager.melee);
 
         if (playerController.isMovingRight)
         {
