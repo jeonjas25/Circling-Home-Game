@@ -7,6 +7,10 @@ public class AudioManager : MonoBehaviour
 
     public AudioClip background;
     public AudioClip melee;
+    public AudioClip laser;
+    public AudioClip lightningBolt;
+    public AudioClip slash;
+    public AudioClip jump;
 
     private void Start()
     {

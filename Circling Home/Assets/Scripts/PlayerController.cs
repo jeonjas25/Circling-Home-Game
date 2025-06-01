@@ -113,12 +113,15 @@ public class PlayerController : MonoBehaviour
     private bool isOnJumpPad = false;
     public float jumpPadMultiplier = 2.0f;
 
+    private AudioManager audioManager;
+
 
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         touchingDirections = GetComponent<TouchingDirections>();
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -297,6 +300,7 @@ public class PlayerController : MonoBehaviour
         if (context.started && (touchingDirections.IsGrounded || CanUseCoyoteTime()))
         {
             isJumping = true;
+            audioManager.PlaySFX(audioManager.jump);
             verticalVelocity = initialJumpForce * (isOnJumpPad ? jumpPadMultiplier : 1f);
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0f);
 

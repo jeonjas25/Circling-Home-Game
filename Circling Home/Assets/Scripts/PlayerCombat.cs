@@ -142,6 +142,7 @@ public class PlayerCombat : MonoBehaviour
     {
         if (Time.time >= nextFireTime)
         {
+            audioManager.PlaySFX(audioManager.laser);
             GameObject bullet = Instantiate(bulletPrefab, RangedAttackPoint.position, Quaternion.identity);
             LaserBulletController laserBulletController = bullet.GetComponent<LaserBulletController>();
 
@@ -180,6 +181,7 @@ public class PlayerCombat : MonoBehaviour
         {
             GameObject lightningBolt = Instantiate(lightningPrefab, RangedAttackPoint.position, Quaternion.identity);
             Debug.Log("Lightning bolt instantiated");
+            audioManager.PlaySFX(audioManager.lightningBolt);
             ChainLightningBoltController chainLightningBoltController = lightningBolt.GetComponent<ChainLightningBoltController>();
 
             if (playerController.isMovingRight) // or however you are tracking player direction.
@@ -203,6 +205,7 @@ public class PlayerCombat : MonoBehaviour
     IEnumerator SwordRush()
     {
         Debug.Log("Sword Rush Triggered");
+        audioManager.PlaySFX(audioManager.slash);
         isRushing = true;
         originalLayer = gameObject.layer;
         gameObject.layer = Mathf.RoundToInt(Mathf.Log(rushingLayer.value, 2));
