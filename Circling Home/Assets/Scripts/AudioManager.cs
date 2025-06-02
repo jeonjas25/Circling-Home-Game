@@ -11,6 +11,8 @@ public class AudioManager : MonoBehaviour
     public AudioClip lightningBolt;
     public AudioClip slash;
     public AudioClip jump;
+    public AudioClip death;
+    public AudioClip checkpoint;
 
     private void Start()
     {

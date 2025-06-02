@@ -434,6 +434,8 @@ MonoBehaviour:
   lightningBolt: {fileID: 8300000, guid: 8548a039234a0c046a3d4ab40cfef353, type: 3}
   slash: {fileID: 8300000, guid: 86cd409717a196d49856ad0068746e75, type: 3}
   jump: {fileID: 8300000, guid: 24fb8e4902dfabe4390347ef8904ed72, type: 3}
+  death: {fileID: 8300000, guid: 4f5bc64a69b9741b49c08897fbf40c67, type: 3}
+  checkpoint: {fileID: 8300000, guid: a0fbeb571ed114dc29e75de4226e56c5, type: 3}
 --- !u!4 &281290564
 Transform:
   m_ObjectHideFlags: 0
