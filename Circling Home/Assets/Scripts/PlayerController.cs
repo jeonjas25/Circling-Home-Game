@@ -406,6 +406,7 @@ public class PlayerController : MonoBehaviour
     public void Die()
     {
         Debug.Log("Player Died!");
+        audioManager.PlaySFX(audioManager.death);
         Respawn();
     }
 
