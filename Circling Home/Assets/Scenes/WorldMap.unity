@@ -1069,7 +1069,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e81f3f6c7a03def429eec7122bc9b185, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelSceneName: 
+  levelSceneName: Level 5
   isUnlocked: 1
 --- !u!212 &977451521
 SpriteRenderer:
